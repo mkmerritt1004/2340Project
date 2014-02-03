@@ -10,5 +10,7 @@
     <string name="login">Login</string>
     <string name="welcome">Welcome</string>
     <string name="main_app_logo">main app logo</string>
+    <string name="register">Register</string>
+    <string name="welcome_screen_image">welcome_screen_image</string>
 
 </resources>
