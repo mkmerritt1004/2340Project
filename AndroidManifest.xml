@@ -23,10 +23,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="WelcomeScreenActivity"
+            android:name="com.example.m3.WelcomeScreenActivity"
             android:label="Welcome Screen">
             <intent-filter>
-                <action android:name="com.example.m3.intent.action.ShowWelcomeScreen" />
+                <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
