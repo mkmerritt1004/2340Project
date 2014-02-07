@@ -40,7 +40,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
  
-				//if(email.equals("admin"){
+				//if(email.equals("admin") && password.equals("pass123")){
 				//	move to success screen
 				//}else{
 				//	signal to try again
