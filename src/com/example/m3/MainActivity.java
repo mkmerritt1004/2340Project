@@ -41,7 +41,8 @@ public class MainActivity extends Activity {
 			public void onClick(View arg0) {
  
 				//if(email.equals("admin") && password.equals("pass123")){
-				//	move to success screen
+				//Intent intent = new Intent(context, //successscreen.class);
+                //startActivity(intent); 
 				//}else{
 				//	signal to try again
 				//}
