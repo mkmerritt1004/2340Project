@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:text="Login Successful" >
+        android:text="@string/login_success" >
 
         <requestFocus />
     </EditText>

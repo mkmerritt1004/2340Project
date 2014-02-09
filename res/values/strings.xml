@@ -12,5 +12,6 @@
     <string name="main_app_logo">main app logo</string>
     <string name="register">Register</string>
     <string name="welcome_screen_image">welcome_screen_image</string>
+    <string name="login_success">Login Successful</string>
 
 </resources>
