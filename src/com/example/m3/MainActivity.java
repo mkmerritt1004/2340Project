@@ -44,10 +44,11 @@ public class MainActivity extends Activity {
 			public void onClick(View arg0) {
 				userEdit   = (EditText)findViewById(R.id.editText1);
 				passEdit   = (EditText)findViewById(R.id.editText2);
-				if(userEdit.equals("admin") && passEdit.equals("pass123")){
+				System.out.println(userEdit);
+				//if(userEdit.equals("admin") && passEdit.equals("pass123")){
 					Intent intent = new Intent(context, SuccessScreenActivity.class);
 					startActivity(intent); 
-				}
+				//}
 				//}else{
 				//	signal to try again
 				//}
