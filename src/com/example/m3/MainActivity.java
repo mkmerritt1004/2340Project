@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.content.Context;
 import android.content.Intent;
 
@@ -32,6 +33,12 @@ public class MainActivity extends Activity {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+    public void updateTextView(String newStr) {
+
+        TextView textView = (TextView) findViewById(R.id.textView1);
+        textView.setText(newStr);
+    }
+    
 	public void addListenerOnButton() {
 		 
 		final Context context = this;
@@ -50,9 +57,9 @@ public class MainActivity extends Activity {
 					Intent intent = new Intent(context, SuccessScreenActivity.class);
 					startActivity(intent); 
 				}
-				//}else{
-				//	signal to try again
-				//}
+				else{
+					updateTextView("Incorrect Username or Password. Try Again.");
+				}
 			}
  
 		});
