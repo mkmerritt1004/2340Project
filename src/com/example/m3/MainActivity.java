@@ -15,7 +15,8 @@ import android.content.Intent;
 public class MainActivity extends Activity {
 	
 	Button loginButton;
-	EditText loginEdit;
+	EditText userEdit;
+	EditText passEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,8 @@ public class MainActivity extends Activity {
  
 			@Override
 			public void onClick(View arg0) {
- 
+				userEdit   = (EditText)findViewById(R.id.editText1);
+				passEdit   = (EditText)findViewById(R.id.editText2);
 				//if(email.equals("admin") && password.equals("pass123")){
 				Intent intent = new Intent(context, SuccessScreenActivity.class);
                 startActivity(intent); 
