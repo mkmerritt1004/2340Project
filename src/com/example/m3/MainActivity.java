@@ -67,7 +67,7 @@ public class MainActivity extends Activity {
 				String userEditStr = userEdit.getText().toString();
 				String passEditStr = passEdit.getText().toString();
 
-				new CheckLoginTask().execute(userEditStr, passEditStr);
+				new CheckLoginTask(context).execute(userEditStr, passEditStr);
 				
 				//Intent intent = new Intent(context, SuccessScreenActivity.class);
 				//startActivity(intent); 
@@ -79,7 +79,10 @@ public class MainActivity extends Activity {
 	
 	class CheckLoginTask extends AsyncTask<String, Void, Boolean> {
 
-	    private Exception exception;
+		private Context context;
+		private CheckLoginTask(Context context) {
+		    this.context = context.getApplicationContext();
+		}
 
 	    protected Boolean doInBackground(String... inputs) {
 	    	HttpURLConnection urlConnection = null;
@@ -104,14 +107,12 @@ public class MainActivity extends Activity {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			    Log.v("JSON",user.toString());
 			    byte[] outputBytes = user.toString().getBytes("UTF8");
 			    
 				OutputStream os = urlConnection.getOutputStream();
 				os.write(outputBytes);
 				os.close();
 				TextView textView = (TextView) findViewById(R.id.textView1);
-				Log.v("Response Code", String.valueOf(urlConnection.getResponseCode()));
 				return urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK;
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
@@ -126,9 +127,8 @@ public class MainActivity extends Activity {
 
 	    protected void onPostExecute(Boolean result) {
 			if ( result ){
-				updateTextView("Hooray");
-				//Intent intent = new Intent(context, SuccessScreenActivity.class);
-				//startActivity(intent); 
+				Intent intent = new Intent(context, SuccessScreenActivity.class);
+				startActivity(intent); 
 			}
 			else{
 				updateTextView("Incorrect Username or Password. Try Again.");
