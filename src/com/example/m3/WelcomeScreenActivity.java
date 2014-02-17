@@ -12,6 +12,7 @@ import android.widget.Button;
 public class WelcomeScreenActivity extends Activity {
 
 	Button button;
+	Button regButton;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,18 @@ public class WelcomeScreenActivity extends Activity {
 		final Context context = this;
  
 		button = (Button) findViewById(R.id.loginButton);
+		regButton = (Button) findViewById(R.id.registerButton);
+		
+		regButton.setOnClickListener(new OnClickListener(){
+			
+			@Override
+			public void onClick(View arg0) {
+ 
+			    Intent intent = new Intent(context, RegistrationActivity.class);
+                            startActivity(intent);   
+			}
+ 
+		});
  
 		button.setOnClickListener(new OnClickListener() {
  

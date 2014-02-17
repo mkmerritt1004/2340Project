@@ -16,5 +16,7 @@
     <string name="blank"></string>
     <string name="title_activity_registration">RegistrationActivity</string>
     <string name="register_title">Register</string>
+    <string name="enter_name">Name</string>
+    <string name="create_account">Create My Account</string>
 
 </resources>
