@@ -14,5 +14,7 @@
     <string name="welcome_screen_image">welcome_screen_image</string>
     <string name="login_success">Login Successful</string>
     <string name="blank"></string>
+    <string name="title_activity_registration">RegistrationActivity</string>
+    <string name="register_title">Register</string>
 
 </resources>
