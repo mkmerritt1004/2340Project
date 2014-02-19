@@ -45,7 +45,8 @@
         </activity>
         <activity
             android:name="com.example.m3.RegistrationActivity"
-            android:label="@string/title_activity_registration" >
+            android:label="@string/title_activity_registration" 
+            android:permission="android.permission.INTERNET">
         </activity>
     </application>
 

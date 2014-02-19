@@ -69,8 +69,6 @@ public class MainActivity extends Activity {
 
 				new CheckLoginTask(context).execute(userEditStr, passEditStr);
 				
-				//Intent intent = new Intent(context, SuccessScreenActivity.class);
-				//startActivity(intent); 
 			}
  
 		});
@@ -80,6 +78,7 @@ public class MainActivity extends Activity {
 	class CheckLoginTask extends AsyncTask<String, Void, Boolean> {
 
 		private Context context;
+		
 		private CheckLoginTask(Context context) {
 		    this.context = context.getApplicationContext();
 		}
