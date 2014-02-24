@@ -11,4 +11,10 @@
         android:text="@string/login_success"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
+    <Button
+        android:id="@+id/viewAccountsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/view_accounts_button" />
+
 </LinearLayout>

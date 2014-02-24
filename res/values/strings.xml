@@ -19,5 +19,8 @@
     <string name="enter_name">Name</string>
     <string name="create_account">Create My Account</string>
     <string name="password_confirmation">Password Confirmation</string>
+    <string name="accounts_overview_title">Accounts Overview</string>
+    <string name="view_accounts_button">View Accounts</string>
+    <string name="create_account_button">Create Account</string>
 
 </resources>

@@ -136,17 +136,5 @@ public class RegistrationActivity extends Activity {
 				}
 			}
 	    }
-	    
-		/**
-		 * required in order to prevent issues in earlier Android version.
-		 */
-		@SuppressWarnings("deprecation")
-		private void disableConnectionReuseIfNecessary() {
-		    // see HttpURLConnection API doc
-		    if (Integer.parseInt(Build.VERSION.SDK) 
-		            < Build.VERSION_CODES.FROYO) {
-		        System.setProperty("http.keepAlive", "false");
-		    }
-		}
 	}
 }
