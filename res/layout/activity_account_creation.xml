@@ -122,4 +122,13 @@
         android:ems="10"
         android:inputType="numberDecimal" />
 
+    <EditText
+        android:id="@+id/editText5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/textView1"
+        android:layout_below="@+id/textView7"
+        android:layout_marginTop="29dp"
+        android:ems="10" />
+
 </RelativeLayout>
