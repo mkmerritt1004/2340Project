@@ -71,9 +71,10 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/textView6"
         android:layout_alignParentRight="true"
-        android:layout_toRightOf="@+id/textView1"
+        android:layout_toRightOf="@+id/textView6"
         android:ems="10"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:paddingLeft="@dimen/activity_horizontal_margin" />
 
     <TextView
         android:id="@+id/textView4"
