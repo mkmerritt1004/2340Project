@@ -28,6 +28,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class AccountCreationActivity extends Activity {
 	Button registerButton;
@@ -48,6 +49,11 @@ public class AccountCreationActivity extends Activity {
 		getMenuInflater().inflate(R.menu.account_creation, menu);
 		return true;
 	}
+	public void updateTextView(String newStr) {
+
+        TextView textView = (TextView) findViewById(R.id.textView6);
+        textView.setText(newStr);
+    }
 	
 	 public void addListenerOnButton() {
 		 
@@ -65,38 +71,38 @@ public class AccountCreationActivity extends Activity {
 					interestRate   = (EditText)findViewById(R.id.editText4);
 					String nameStr = name.getText().toString();
 					String accountNameStr = accountName.getText().toString();
-					double balanceDouble = Double.parseDouble(balance.getText().toString());
-					double interestRateDouble = Double.parseDouble(balance.getText().toString());
+					String balanceDouble = balance.getText().toString();
+					String interestRateDouble = balance.getText().toString();
 
-					new RegisterTask(context).execute(nameStr, accountNameStr, balanceStr, interestRateStr);
+					new accountCreationTask(context).execute(nameStr, accountNameStr, balanceDouble, interestRateDouble);
 					
 				}
 	 
 			});
 	    
 		}
-	 class RegisterTask extends AsyncTask<String, Void, HttpResponse> {
+	 class accountCreationTask extends AsyncTask<String, Void, HttpResponse> {
 
 			private Context context;
 			private HttpResponse response;
 			
-			private RegisterTask(Context context) {
+			private accountCreationTask(Context context) {
 			    this.context = context.getApplicationContext();
 			}
 
 		    protected HttpResponse doInBackground(String... inputs) {
 		    	HttpClient httpclient = new DefaultHttpClient();
-		        HttpPost httppost = new HttpPost("http://intense-garden-9893.herokuapp.com/api/users.json");
+		        HttpPost httppost = new HttpPost("http://intense-garden-9893.herokuapp.com/api/accounts");
 
 		        try {
 		            // Add your data
 		            List<NameValuePair> params = new ArrayList<NameValuePair>(4);
-		            params.add(new BasicNameValuePair("[user][name]", inputs[0]));
-		            params.add(new BasicNameValuePair("[user][email]", inputs[1]));
-		            params.add(new BasicNameValuePair("[user][password]", inputs[2]));
-		            params.add(new BasicNameValuePair("[user][password_confirmation]", inputs[3]));
+		            params.add(new BasicNameValuePair("[account][full_name]", inputs[0]));
+		            params.add(new BasicNameValuePair("[account][display_name]", inputs[1]));
+		            params.add(new BasicNameValuePair("[account][balance]", inputs[2]));
+		            params.add(new BasicNameValuePair("[account][interest_rate]", inputs[3]));
 		            httppost.setEntity(new UrlEncodedFormEntity(params));
-
+		            //need to convert it to float
 		            // Execute HTTP Post Request
 		            response = httpclient.execute(httppost);
 		            
@@ -112,7 +118,7 @@ public class AccountCreationActivity extends Activity {
 
 		    protected void onPostExecute(HttpResponse response) {
 				if ( response.getStatusLine().getStatusCode() == 201 ){
-					Intent intent = new Intent(context, SuccessScreenActivity.class);
+					Intent intent = new Intent(context, AccountsOverviewActivity.class);
 					startActivity(intent); 
 				}
 				else{
