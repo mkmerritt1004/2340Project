@@ -22,5 +22,10 @@
     <string name="accounts_overview_title">Accounts Overview</string>
     <string name="view_accounts_button">View Accounts</string>
     <string name="create_account_button">Create Account</string>
+    <string name="title_activity_account_creation">AccountCreationActivity</string>
+    <string name="display_name">Display Name</string>
+    <string name="acct_balance">Balance</string>
+    <string name="interest_rate">Interest Rate</string>
+    <string name="dollars">$</string>
 
 </resources>

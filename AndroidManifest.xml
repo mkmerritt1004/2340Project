@@ -45,18 +45,22 @@
         </activity>
         <activity
             android:name="com.example.m3.RegistrationActivity"
-            android:label="@string/title_activity_registration" 
-            android:permission="android.permission.INTERNET">
+            android:label="@string/title_activity_registration"
+            android:permission="android.permission.INTERNET" >
         </activity>
         <activity
             android:name="com.example.m3.AccountsOverviewActivity"
-            android:label="@string/accounts_overview_title" 
-            android:permission="android.permission.INTERNET">
+            android:label="@string/accounts_overview_title"
+            android:permission="android.permission.INTERNET" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.m3.AccountCreationActivity"
+            android:label="@string/title_activity_account_creation" >
         </activity>
     </application>
 
