@@ -2,9 +2,11 @@ package com.example.m3;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -40,19 +42,18 @@ public class AccountsOverviewActivity extends Activity {
 		 
 		final Context context = this;
  
-//		newAccountButton = (Button) findViewById(R.id.newAccountButton);
-// 
-//		newAccountButton.setOnClickListener(new OnClickListener() {
-// 
-//			@Override
-//			public void onClick(View arg0) {
-//				
-//			    Intent intent = new Intent(context, MainActivity.class);
-//                startActivity(intent);  
-//				
-//			}
-// 
-//		});
+		newAccountButton = (Button) findViewById(R.id.button1);
+ 
+		newAccountButton.setOnClickListener(new OnClickListener() {
+ 
+			@Override
+			public void onClick(View arg0) {
+				
+			    Intent intent = new Intent(context, AccountCreationActivity.class);
+                startActivity(intent);  
+				
+			}
+		});
     
 	}
 	
