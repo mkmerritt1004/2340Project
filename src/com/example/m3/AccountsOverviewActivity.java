@@ -114,13 +114,21 @@ public class AccountsOverviewActivity extends Activity {
 						//String accountNameStr = accountName.toString();
 					//}
 					String accountInfo = EntityUtils.toString(response.getEntity());
-					String[] temp = null;
-					int i = 0;
-					int j = 0;
-					while (i<accountInfo.length()){
-						//look at string at i
-						//if "}" then copy from j to i into temp[] i++ j=i
-						//else i++ 
+					String[] temp = new String[25];
+					int startIndex = 0;
+					int endIndex = 0;
+					int count = 0;
+					int numberOfAccounts = 0;
+					while (count<accountInfo.length()){
+						if (accountInfo.charAt(count) == "{".charAt(0)) {
+							startIndex = count + 1;
+						} else if (accountInfo.charAt(count) == "}".charAt(0)) {
+							endIndex = count;
+							String oneAccount = accountInfo.substring(startIndex, endIndex);
+							temp[numberOfAccounts] = oneAccount;
+							numberOfAccounts++;
+						}
+						count++;
 					}
 					//updateButtons()
 					//get display name
