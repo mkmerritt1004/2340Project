@@ -110,15 +110,17 @@ public class AccountsOverviewActivity extends Activity {
 			if ( response.getStatusLine().getStatusCode() == 200 ){
 				try {
 					String stringResponse = EntityUtils.toString(response.getEntity());
-					String arrayStringResponse = stringResponse.substring(1, stringResponse.length() - 1);
-					String[] accounts = arrayStringResponse.split("\\}");
-					ArrayList<String> accountNameArray = new ArrayList<String>();
-					for (String account : accounts) {
-						String[] attr = account.substring(2).split(",");
-						accountNameArray.add(attr[2]);
-					}
-					for (String name : accountNameArray) {
-						createButton(name.substring(16, name.length() - 1));
+					if (stringResponse.length() > 10) {
+						String arrayStringResponse = stringResponse.substring(1, stringResponse.length() - 1);
+						String[] accounts = arrayStringResponse.split("\\}");
+						ArrayList<String> accountNameArray = new ArrayList<String>();
+						for (String account : accounts) {
+							String[] attr = account.substring(2).split(",");
+							accountNameArray.add(attr[2]);
+						}
+						for (String name : accountNameArray) {
+							createButton(name.substring(16, name.length() - 1));
+						}
 					}
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
