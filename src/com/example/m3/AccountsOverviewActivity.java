@@ -115,7 +115,7 @@ public class AccountsOverviewActivity extends Activity {
 						String[] accounts = arrayStringResponse.split("\\}");
 						ArrayList<String> accountNameArray = new ArrayList<String>();
 						for (String account : accounts) {
-							String[] attr = account.substring(2).split(",");
+							String[] attr = account.substring(1).split(",");
 							accountNameArray.add(attr[2]);
 						}
 						for (String name : accountNameArray) {
