@@ -121,8 +121,20 @@ public class RegistrationActivity extends Activity {
 
 	    protected void onPostExecute(HttpResponse response) {
 			if ( response.getStatusLine().getStatusCode() == 201 ){
-				Intent intent = new Intent(context, SuccessScreenActivity.class);
-				startActivity(intent); 
+				try {
+					String stringResponse = EntityUtils.toString(response.getEntity());
+					String[] splitResponse = stringResponse.split(":");
+					String auth_token = splitResponse[3].substring(1, splitResponse[3].length() - 2);
+					Intent intent = new Intent(context, SuccessScreenActivity.class);
+					intent.putExtra("auth_token", auth_token);
+					startActivity(intent); 
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			else{
 				try {
