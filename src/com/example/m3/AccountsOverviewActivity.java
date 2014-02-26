@@ -39,16 +39,34 @@ public class AccountsOverviewActivity extends Activity {
         setContentView(R.layout.activity_accounts_overview);
         layout = (LinearLayout) findViewById(R.id.activityAccountsOverview);
         //adds all the accounts; need to update accounts
-        String[] accounts = {"Account 1", "Account 2"};
+       /* String[] accounts = {"Account 1", "Account 2"};
         for (String account:accounts) {
         	Button button = new Button(this);
         	button.setText(account);
             layout.addView(button);
         }
+        */
 
         addListenerOnCreateButton();
     }
-
+	public String[] findSub(String[] arr){
+		String[] accountArr = new String[arr.length];
+		for(int i=0; i<arr.length; i++){
+			int start = arr[i].indexOf("full_name");
+			start = start + 13;
+			int end = arr[i].indexOf("\n", start);
+			String account = (String) arr[i].subSequence(start, end);
+			accountArr[i] = account;
+		}
+		return accountArr;
+	}
+	public void updateAcctButton(String[] accounts){
+		for (String account:accounts) {
+        	Button button = new Button(this);
+        	button.setText(account);
+            layout.addView(button);
+		}
+	}
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -109,10 +127,7 @@ public class AccountsOverviewActivity extends Activity {
 			}
 			else{
 				try {
-					//byte[] accountInfo =  EntityUtils.toByteArray(response.getEntity());
-					//for (byte accountName: accountInfo) {
-						//String accountNameStr = accountName.toString();
-					//}
+					
 					String accountInfo = EntityUtils.toString(response.getEntity());
 					String[] temp = new String[25];
 					int startIndex = 0;
@@ -130,8 +145,10 @@ public class AccountsOverviewActivity extends Activity {
 						}
 						count++;
 					}
+					
 					//updateButtons()
 					//get display name
+					updateAcctButton(findSub(temp));
 					
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
