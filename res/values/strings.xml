@@ -27,5 +27,6 @@
     <string name="interest_rate">Interest Rate</string>
     <string name="dollars">$</string>
     <string name="account_name">Account Name</string>
+    <string name="display_name">Display Name</string>
 
 </resources>

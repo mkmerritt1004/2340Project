@@ -17,6 +17,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
+import com.example.m3.MainActivity.CheckLoginTask;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -31,41 +33,25 @@ import android.widget.LinearLayout;
 public class AccountsOverviewActivity extends Activity {
 	Button newAccountButton;
 	LinearLayout layout;
+	String auth_token;
 	
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+		Intent oldIntent = getIntent();
+        auth_token = oldIntent.getStringExtra("auth_token");
         setContentView(R.layout.activity_accounts_overview);
         layout = (LinearLayout) findViewById(R.id.activityAccountsOverview);
-        //adds all the accounts; need to update accounts
-       /* String[] accounts = {"Account 1", "Account 2"};
-        for (String account:accounts) {
-        	Button button = new Button(this);
-        	button.setText(account);
-            layout.addView(button);
-        }
-        */
-
+		final Context context = this;
+        new CreateAccountsButtonTask(context).execute();
         addListenerOnCreateButton();
     }
-	public String[] findSub(String[] arr){
-		String[] accountArr = new String[arr.length];
-		for(int i=0; i<arr.length; i++){
-			int start = arr[i].indexOf("full_name");
-			start = start + 13;
-			int end = arr[i].indexOf("\n", start);
-			String account = (String) arr[i].subSequence(start, end);
-			accountArr[i] = account;
-		}
-		return accountArr;
-	}
-	public void updateAcctButton(String[] accounts){
-		for (String account:accounts) {
-        	Button button = new Button(this);
-        	button.setText(account);
-            layout.addView(button);
-		}
+
+	private void createButton(String accountName) {
+    	Button button = new Button(this);
+    	button.setText(accountName);
+        layout.addView(button);
 	}
 
     @Override
@@ -85,31 +71,31 @@ public class AccountsOverviewActivity extends Activity {
  
 			@Override
 			public void onClick(View arg0) {
-				
 			    Intent intent = new Intent(context, AccountCreationActivity.class);
+                intent.putExtra("auth_token", auth_token);
                 startActivity(intent);  
-				
 			}
 		});
     
 	}
-	class createAccountButtonTask extends AsyncTask<String, Void, HttpResponse> {
+	
+	class CreateAccountsButtonTask extends AsyncTask<String, Void, HttpResponse> {
 
 		private Context context;
 		private HttpResponse response;
 		
-		private createAccountButtonTask(Context context) {
+		private CreateAccountsButtonTask(Context context) {
 		    this.context = context.getApplicationContext();
 		}
 
 	    protected HttpResponse doInBackground(String... inputs) {
+	    	
 	    	HttpClient httpclient = new DefaultHttpClient();
-	        HttpGet httpget = new HttpGet("http://intense-garden-9893.herokuapp.com/api/users/accounts.json");
+	        HttpGet httpget = new HttpGet("http://intense-garden-9893.herokuapp.com/api/users/accounts.json?authentication_token=" + auth_token);
 
 	        try {
-	            // Execute HTTP Post Request
+	            // Execute HTTP Get Request
 	            response = httpclient.execute(httpget);
-	            
 	        } catch (ClientProtocolException e) {
 	            // TODO Auto-generated catch block
 	            System.out.println("CPE"+e);
@@ -121,35 +107,30 @@ public class AccountsOverviewActivity extends Activity {
 	    }
 
 	    protected void onPostExecute(HttpResponse response) {
-			if ( response.getStatusLine().getStatusCode() == 201 ){
-				Intent intent = new Intent(context, SuccessScreenActivity.class);
-				startActivity(intent); 
+			if ( response.getStatusLine().getStatusCode() == 200 ){
+				try {
+					String stringResponse = EntityUtils.toString(response.getEntity());
+					String arrayStringResponse = stringResponse.substring(1, stringResponse.length() - 1);
+					String[] accounts = arrayStringResponse.split("\\}");
+					ArrayList<String> accountNameArray = new ArrayList<String>();
+					for (String account : accounts) {
+						String[] attr = account.substring(2).split(",");
+						accountNameArray.add(attr[2]);
+					}
+					for (String name : accountNameArray) {
+						createButton(name.substring(16, name.length() - 1));
+					}
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			else{
 				try {
-					
-					String accountInfo = EntityUtils.toString(response.getEntity());
-					String[] temp = new String[25];
-					int startIndex = 0;
-					int endIndex = 0;
-					int count = 0;
-					int numberOfAccounts = 0;
-					while (count<accountInfo.length()){
-						if (accountInfo.charAt(count) == "{".charAt(0)) {
-							startIndex = count + 1;
-						} else if (accountInfo.charAt(count) == "}".charAt(0)) {
-							endIndex = count;
-							String oneAccount = accountInfo.substring(startIndex, endIndex);
-							temp[numberOfAccounts] = oneAccount;
-							numberOfAccounts++;
-						}
-						count++;
-					}
-					
-					//updateButtons()
-					//get display name
-					updateAcctButton(findSub(temp));
-					
+					createButton(EntityUtils.toString(response.getEntity()));
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

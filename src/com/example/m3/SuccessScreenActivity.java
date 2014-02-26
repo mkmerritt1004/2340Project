@@ -36,9 +36,11 @@ public class SuccessScreenActivity extends Activity{
 	 
 				@Override
 				public void onClick(View arg0) {
-					
+					Intent oldIntent = getIntent();
+					String auth_token = oldIntent.getStringExtra("auth_token");
 				    Intent intent = new Intent(context, AccountsOverviewActivity.class);
-	                startActivity(intent);  
+	                intent.putExtra("auth_token", auth_token);
+				    startActivity(intent);  
 					
 				}
 	 

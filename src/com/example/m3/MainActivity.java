@@ -5,8 +5,19 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.ParseException;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -75,75 +86,61 @@ public class MainActivity extends Activity {
     
 	}
 	
-	class CheckLoginTask extends AsyncTask<String, Void, Boolean> {
+	class CheckLoginTask extends AsyncTask<String, Void, HttpResponse> {
 
 		private Context context;
+		private HttpResponse response;
 		
 		private CheckLoginTask(Context context) {
 		    this.context = context.getApplicationContext();
 		}
 
-	    protected Boolean doInBackground(String... inputs) {
-	    	HttpURLConnection urlConnection = null;
+	    protected HttpResponse doInBackground(String... inputs) {
+	    	HttpClient httpclient = new DefaultHttpClient();
+	        HttpPost httppost = new HttpPost("http://intense-garden-9893.herokuapp.com/api/users/sign_in.json");
+
 	        try {
-				disableConnectionReuseIfNecessary();
-				String email = inputs[0];
-				String password = inputs[1];
-				String url = "http://intense-garden-9893.herokuapp.com/api/users/sign_in.json";
-	        	urlConnection = (HttpURLConnection) new URL(url).openConnection();
-				urlConnection.setDoOutput(true); //Triggers POST
-				urlConnection.setRequestProperty("Content-Type", "application/json");
-				urlConnection.setRequestProperty("Accept", "application/json");
-				urlConnection.setRequestMethod("POST");
-								
-				JSONObject user = new JSONObject();
-				JSONObject params = new JSONObject();
-			    try {
-					params.put("email",email);
-				    params.put("password",password);
-				    user.put("user", params);
-				} catch (JSONException e) {
+	            // Add your data
+	            List<NameValuePair> params = new ArrayList<NameValuePair>(2);
+	            params.add(new BasicNameValuePair("[user][email]", inputs[0]));
+	            params.add(new BasicNameValuePair("[user][password]", inputs[1]));
+	            httppost.setEntity(new UrlEncodedFormEntity(params));
+
+	            // Execute HTTP Post Request
+	            response = httpclient.execute(httppost);
+	            
+	        } catch (ClientProtocolException e) {
+	            // TODO Auto-generated catch block
+	            System.out.println("CPE"+e);
+	        } catch (IOException e) {
+	            // TODO Auto-generated catch block
+	            System.out.println("IOE"+e);
+	        }
+	        return response;
+	    }
+
+	    protected void onPostExecute(HttpResponse response) {
+			if ( response.getStatusLine().getStatusCode() == 200 ){
+				try {
+					String stringResponse = EntityUtils.toString(response.getEntity());
+					String[] splitResponse = stringResponse.split(":");
+					String auth_token = splitResponse[2].substring(1,splitResponse[2].length() - 9);
+					Intent intent = new Intent(context, SuccessScreenActivity.class);
+					intent.putExtra("auth_token", auth_token);
+					startActivity(intent); 
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			    byte[] outputBytes = user.toString().getBytes("UTF8");
-			    
-				OutputStream os = urlConnection.getOutputStream();
-				os.write(outputBytes);
-				os.close();
-				TextView textView = (TextView) findViewById(R.id.textView1);
-				return urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK;
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return false;
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return false;
-			}
-	    }
 
-	    protected void onPostExecute(Boolean result) {
-			if ( result ){
-				Intent intent = new Intent(context, SuccessScreenActivity.class);
-				startActivity(intent); 
 			}
 			else{
 				updateTextView("Incorrect Username or Password. Try Again.");
 			}
 	    }
-	    
-		/**
-		 * required in order to prevent issues in earlier Android version.
-		 */
-		@SuppressWarnings("deprecation")
-		private void disableConnectionReuseIfNecessary() {
-		    // see HttpURLConnection API doc
-		    if (Integer.parseInt(Build.VERSION.SDK) 
-		            < Build.VERSION_CODES.FROYO) {
-		        System.setProperty("http.keepAlive", "false");
-		    }
-		}
 	}
+
 }

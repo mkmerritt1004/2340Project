@@ -36,11 +36,15 @@ public class AccountCreationActivity extends Activity {
 	EditText accountName;
 	EditText balance;
 	EditText interestRate;
+	String auth_token;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Intent oldIntent = getIntent();
+		auth_token = oldIntent.getStringExtra("auth_token");
 		setContentView(R.layout.activity_account_creation);
+        addListenerOnCreateButton();
 	}
 
 	@Override
@@ -55,7 +59,7 @@ public class AccountCreationActivity extends Activity {
         textView.setText(newStr);
     }
 	
-	 public void addListenerOnButton() {
+	 public void addListenerOnCreateButton() {
 		 
 			final Context context = this;
 	 
@@ -72,7 +76,7 @@ public class AccountCreationActivity extends Activity {
 					String nameStr = name.getText().toString();
 					String accountNameStr = accountName.getText().toString();
 					String balanceDouble = balance.getText().toString();
-					String interestRateDouble = balance.getText().toString();
+					String interestRateDouble = interestRate.getText().toString();
 
 					new accountCreationTask(context).execute(nameStr, accountNameStr, balanceDouble, interestRateDouble);
 					
@@ -92,17 +96,16 @@ public class AccountCreationActivity extends Activity {
 
 		    protected HttpResponse doInBackground(String... inputs) {
 		    	HttpClient httpclient = new DefaultHttpClient();
-		        HttpPost httppost = new HttpPost("http://intense-garden-9893.herokuapp.com/api/accounts");
+		        HttpPost httppost = new HttpPost("http://intense-garden-9893.herokuapp.com/api/accounts?authentication_token=" + auth_token);
 
 		        try {
 		            // Add your data
 		            List<NameValuePair> params = new ArrayList<NameValuePair>(4);
-		            params.add(new BasicNameValuePair("[account][full_name]", inputs[0]));
-		            params.add(new BasicNameValuePair("[account][display_name]", inputs[1]));
+		            params.add(new BasicNameValuePair("[account][display_name]", inputs[0]));
+		            params.add(new BasicNameValuePair("[account][full_name]", inputs[1]));
 		            params.add(new BasicNameValuePair("[account][balance]", inputs[2]));
 		            params.add(new BasicNameValuePair("[account][interest_rate]", inputs[3]));
 		            httppost.setEntity(new UrlEncodedFormEntity(params));
-		            //need to convert it to float
 		            // Execute HTTP Post Request
 		            response = httpclient.execute(httppost);
 		            
@@ -119,6 +122,7 @@ public class AccountCreationActivity extends Activity {
 		    protected void onPostExecute(HttpResponse response) {
 				if ( response.getStatusLine().getStatusCode() == 201 ){
 					Intent intent = new Intent(context, AccountsOverviewActivity.class);
+					intent.putExtra("auth_token", auth_token);
 					startActivity(intent); 
 				}
 				else{
