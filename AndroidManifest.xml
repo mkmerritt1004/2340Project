@@ -62,6 +62,10 @@
             android:name="com.example.m3.AccountCreationActivity"
             android:label="@string/title_activity_account_creation" >
         </activity>
+        <activity
+            android:name="com.example.m3.TransPageActivity"
+            android:label="@string/title_activity_trans_page" >
+        </activity>
     </application>
 
 </manifest>

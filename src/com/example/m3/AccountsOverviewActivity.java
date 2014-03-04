@@ -120,6 +120,7 @@ public class AccountsOverviewActivity extends Activity {
 						}
 						for (String name : accountNameArray) {
 							createButton(name.substring(16, name.length() - 1));
+							
 						}
 					}
 				} catch (ParseException e) {
