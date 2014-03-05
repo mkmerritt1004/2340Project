@@ -66,6 +66,14 @@
             android:name="com.example.m3.TransPageActivity"
             android:label="@string/title_activity_trans_page" >
         </activity>
+        <activity
+            android:name="com.example.m3.DepositActivity"
+            android:label="@string/title_activity_deposit" >
+        </activity>
+        <activity
+            android:name="com.example.m3.WithdrawalActivity"
+            android:label="@string/title_activity_withdrawal" >
+        </activity>
     </application>
 
 </manifest>
