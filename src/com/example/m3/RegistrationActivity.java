@@ -52,7 +52,6 @@ public class RegistrationActivity extends Activity {
 	}
 
     public void updateTextView(String newStr) {
-
         TextView textView = (TextView) findViewById(R.id.textView6);
         textView.setText(newStr);
     }

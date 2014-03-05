@@ -53,8 +53,8 @@ public class AccountCreationActivity extends Activity {
 		getMenuInflater().inflate(R.menu.account_creation, menu);
 		return true;
 	}
+	
 	public void updateTextView(String newStr) {
-
         TextView textView = (TextView) findViewById(R.id.textView6);
         textView.setText(newStr);
     }

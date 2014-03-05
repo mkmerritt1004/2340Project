@@ -2,22 +2,13 @@ package com.example.m3;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-
-import com.example.m3.MainActivity.CheckLoginTask;
 
 import android.app.Activity;
 import android.content.Context;
@@ -48,7 +39,7 @@ public class AccountsOverviewActivity extends Activity {
         addListenerOnCreateButton();
     }
 
-	private void createButton(String accountName) {
+	private void createButton(String accountName, final String accountId) {
     	Button button = new Button(this);
     	button.setText(accountName);
         layout.addView(button);
@@ -58,6 +49,8 @@ public class AccountsOverviewActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 			    Intent intent = new Intent(context, TransPageActivity.class);
+                intent.putExtra("auth_token", auth_token);
+                intent.putExtra("account_id", accountId);
                 startActivity(intent);
 			}
  
@@ -124,13 +117,16 @@ public class AccountsOverviewActivity extends Activity {
 						String arrayStringResponse = stringResponse.substring(1, stringResponse.length() - 1);
 						String[] accounts = arrayStringResponse.split("\\}");
 						ArrayList<String> accountNameArray = new ArrayList<String>();
+						ArrayList<String> accountIdArray = new ArrayList<String>();
 						for (String account : accounts) {
 							String[] attr = account.substring(1).split(",");
 							accountNameArray.add(attr[2]);
+							accountIdArray.add(attr[0]);
 						}
-						for (String name : accountNameArray) {
-							createButton(name.substring(16, name.length() - 1));
-							
+						for (int i = 0; i < accountNameArray.size(); i++) {
+							String id = accountIdArray.get(i).split(":")[1];
+							createButton(accountNameArray.get(i).substring(16, 
+									accountNameArray.get(i).length() - 1), id );
 						}
 					}
 				} catch (ParseException e) {
@@ -143,7 +139,7 @@ public class AccountsOverviewActivity extends Activity {
 			}
 			else{
 				try {
-					createButton(EntityUtils.toString(response.getEntity()));
+					createButton(EntityUtils.toString(response.getEntity()), "0");
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

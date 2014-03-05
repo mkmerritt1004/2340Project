@@ -1,75 +1,68 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".TransPageActivity" >
-
-    <TextView
-        android:id="@+id/textView1"
+        
+    <TableRow
+        android:id="@+id/tableRow1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="21dp"
-        android:layout_marginTop="15dp"
-        android:text="@string/account_name_holder"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:layout_margin="20dp" >
 
-    <TextView
-        android:id="@+id/textView2"
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/account_name" />
+
+        <TextView
+            android:id="@+id/account_name_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/blank" />
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/textView1"
-        android:layout_marginTop="36dp"
-        android:text="@string/balance_holder" />
+        android:layout_margin="20dp" >
 
-    <TextView
-        android:id="@+id/textView4"
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/balance" />
+
+        <TextView
+            android:id="@+id/balance_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/blank" />
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_below="@+id/textView2"
-        android:layout_marginTop="44dp"
-        android:text="@string/i_rate" />
+        android:layout_margin="20dp" >
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textView4"
-        android:layout_marginLeft="32dp"
-        android:layout_toRightOf="@+id/textView4"
-        android:text="@string/balance_amount" />
+        <Button
+            android:id="@+id/withdrawalButton"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:text="@string/withdrawal" />
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView4"
-        android:layout_alignLeft="@+id/textView3"
-        android:text="@string/i_holder" />
+        <Button
+            android:id="@+id/depositButton"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:text="@string/deposit" />
+    </TableRow>
 
-    <Button
-        android:id="@+id/withdrawalButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="54dp"
-        android:text="@string/withdrawal" />
-
-    <Button
-        android:id="@+id/depositButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/withdrawalButton"
-        android:layout_marginBottom="20dp"
-        android:layout_toRightOf="@+id/textView4"
-        android:text="@string/deposit" />
-
-</RelativeLayout>
+</TableLayout>

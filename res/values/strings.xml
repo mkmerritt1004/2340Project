@@ -26,22 +26,26 @@
     <string name="acct_balance">Balance</string>
     <string name="interest_rate">Interest Rate</string>
     <string name="dollars">$</string>
-    <string name="account_name">Account Name</string>
+    <string name="account_name">Account Name: </string>
     <string name="display_name">Display Name</string>
     <string name="title_activity_trans_page">TransPageActivity</string>
     <string name="account_name_holder">Account Name</string>
-    <string name="balance_holder">Balance $</string>
+    <string name="balance">Balance: </string>
     <string name="withdrawal">Withdrawal</string>
     <string name="deposit">Deposit</string>
-    <string name="balance_amount">Amount</string>
-    <string name="i_holder">Rate</string>
+    <string name="rate">Rate</string>
     <string name="i_rate">Interest Rate</string>
     <string name="title_activity_deposit">DepositActivity</string>
-    <string name="deposit_info">Enter Deposit Information</string>
     <string name="withdrawal_info">Enter Withdrawal Information</string>
-    <string name="deposit_description">Description</string>
     <string name="amount">Amount</string>
     <string name="title_activity_withdrawal">WithdrawalActivity</string>
     <string name="expense_cate">Expense Category</string>
+    <string name="type">Type</string>
+    <string name="withdraw">Withdraw</string>
+    <string name="reason">Reason</string>
+    <string name="category">Category</string>
+    <string name="effective_date">Effective Date</string>
+    <string name="transaction">Transaction</string>
+    <string name="source">Source</string>
 
 </resources>
