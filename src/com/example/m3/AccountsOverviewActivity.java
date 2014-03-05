@@ -65,7 +65,7 @@ public class AccountsOverviewActivity extends Activity {
 		 
 		final Context context = this;
  
-		newAccountButton = (Button) findViewById(R.id.button1);
+		newAccountButton = (Button) findViewById(R.id.depositButton);
  
 		newAccountButton.setOnClickListener(new OnClickListener() {
  

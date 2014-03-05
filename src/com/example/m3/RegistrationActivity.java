@@ -61,7 +61,7 @@ public class RegistrationActivity extends Activity {
 		 
 		final Context context = this;
  
-		registerButton = (Button) findViewById(R.id.button1);
+		registerButton = (Button) findViewById(R.id.depositButton);
  
 		registerButton.setOnClickListener(new OnClickListener() {
  
