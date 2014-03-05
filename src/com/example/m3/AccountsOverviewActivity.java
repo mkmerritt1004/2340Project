@@ -52,6 +52,16 @@ public class AccountsOverviewActivity extends Activity {
     	Button button = new Button(this);
     	button.setText(accountName);
         layout.addView(button);
+        final Context context = this;
+        button.setOnClickListener(new OnClickListener() {
+ 
+			@Override
+			public void onClick(View arg0) {
+			    Intent intent = new Intent(context, TransPageActivity.class);
+                startActivity(intent);
+			}
+ 
+		});
 	}
 
     @Override
