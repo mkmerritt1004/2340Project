@@ -10,7 +10,7 @@
     tools:context=".DepositActivity" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/spendingReportTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/transaction"
@@ -32,7 +32,7 @@
     </EditText>
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/Category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/effective_date" />

@@ -47,5 +47,7 @@
     <string name="effective_date">Effective Date</string>
     <string name="transaction">Transaction</string>
     <string name="source">Source</string>
+    <string name="spending_report">Spending Report</string>
+    <string name="spending_report_title">Spending Report</string>
 
 </resources>

@@ -9,7 +9,7 @@
     tools:context=".RegistrationActivity" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/spendingReportTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/register_title" />
@@ -18,8 +18,8 @@
         android:id="@+id/editText2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView3"
-        android:layout_below="@+id/textView3"
+        android:layout_alignLeft="@+id/Category"
+        android:layout_below="@+id/Category"
         android:ems="10" >
 
 
@@ -49,12 +49,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/editText1"
-        android:layout_below="@+id/textView1"
+        android:layout_below="@+id/spendingReportTitle"
         android:layout_marginTop="38dp"
         android:text="@string/enter_name" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/Category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/editText1"
@@ -66,7 +66,7 @@
         android:id="@+id/editText1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
+        android:layout_alignLeft="@+id/spendingReportTitle"
         android:layout_below="@+id/textView2"
         android:layout_marginLeft="16dp"
         android:ems="10"
@@ -106,7 +106,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/textView2"
-            android:layout_below="@+id/textView1"
+            android:layout_below="@+id/spendingReportTitle"
             android:layout_marginTop="14dp"
             android:text="@string/blank" />
 
