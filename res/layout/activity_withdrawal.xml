@@ -37,11 +37,12 @@
         android:layout_height="wrap_content"
         android:text="@string/category" />
 
-    <EditText
-        android:id="@+id/category_input"
+    <Spinner
+        android:id="@+id/spinner1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10" />
+        android:entries="@array/Categories"
+        android:prompt="@string/Category" />
 
     <TextView
         android:id="@+id/textView4"
@@ -49,12 +50,11 @@
         android:layout_height="wrap_content"
         android:text="@string/effective_date" />
 
-    <EditText
-        android:id="@+id/effective_date_input"
+    <DatePicker
+        android:id="@+id/datePicker1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="date" />
+        android:layout_height="60dp"
+        android:layout_weight="0.69" />
 
     <TextView
         android:id="@+id/textView5"

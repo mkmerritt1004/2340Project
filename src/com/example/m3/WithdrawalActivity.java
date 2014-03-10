@@ -26,7 +26,9 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class WithdrawalActivity extends Activity {
@@ -35,8 +37,8 @@ public class WithdrawalActivity extends Activity {
 	private Context context;
 	private Button withdrawalButton;
 	private EditText reason;
-	private EditText category;
-	private EditText effectiveDate;
+	private Spinner category;
+	private DatePicker effectiveDate;
 	private EditText amount;
 
 	@Override
@@ -73,15 +75,18 @@ public class WithdrawalActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				reason   = (EditText)findViewById(R.id.reason_input);
-				category   = (EditText)findViewById(R.id.category_input);
-				effectiveDate   = (EditText)findViewById(R.id.effective_date_input);
+				category   = (Spinner)findViewById(R.id.spinner1);
+				effectiveDate   = (DatePicker)findViewById(R.id.datePicker1);
 				amount   = (EditText)findViewById(R.id.amount_input);
 				String reasonStr = reason.getText().toString();
-				String categoryStr = category.getText().toString();
-				String effectiveDateStr = effectiveDate.getText().toString();
+				String categoryStr = category.getSelectedItem().toString();
+				int day = effectiveDate.getDayOfMonth();
+				int month=effectiveDate.getMonth()+1;
+				int year=effectiveDate.getYear();
+				String date= day+"/"+month+"/"+year;
 				String amountStr = amount.getText().toString();
 
-				new withdrawTask(context).execute(reasonStr, categoryStr, effectiveDateStr, amountStr, account_id);
+				new withdrawTask(context).execute(reasonStr, categoryStr, date, amountStr, account_id);
 				
 			}
  
