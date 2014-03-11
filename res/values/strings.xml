@@ -47,8 +47,6 @@
     <string name="effective_date">Effective Date</string>
     <string name="transaction">Transaction</string>
     <string name="source">Source</string>
-    <string name="spending_report">Spending Report</string>
-    <string name="spending_report_title">Spending Report</string>
     <string-array name="Categories">
         <item>Food</item>
         <item>Rent</item>
@@ -57,6 +55,17 @@
         <item>Other</item>
     </string-array>
     <string name="Category">Category</string>
+    <string name="spending_report_title">Spending Category Report</string>
+    <string name="food">Food</string>
+    <string name="rent">Rent</string>
+    <string name="entertainment">Entertainment</string>
+    <string name="clothing">Clothing</string>
+    <string name="other">Other</string>
+    <string name="total">Total</string>
+    <string name="start">Start</string>
+    <string name="end">End</string>
+    <string name="date_range">Select Date Range</string>
+    <string name="submit">Submit</string>
     
 
 </resources>
