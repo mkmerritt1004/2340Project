@@ -23,7 +23,7 @@ import android.widget.LinearLayout;
 
 public class AccountsOverviewActivity extends Activity {
 	Button newAccountButton;
-	Button SpendingReportButton;
+	Button spendingReportButton;
 	LinearLayout layout;
 	String auth_token;
 	
@@ -70,6 +70,7 @@ public class AccountsOverviewActivity extends Activity {
 		final Context context = this;
  
 		newAccountButton = (Button) findViewById(R.id.depositButton);
+		spendingReportButton = (Button) findViewById(R.id.backButton2);
  
 		newAccountButton.setOnClickListener(new OnClickListener() {
  
@@ -80,7 +81,16 @@ public class AccountsOverviewActivity extends Activity {
                 startActivity(intent);  
 			}
 		});
-    
+		
+		spendingReportButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				 Intent intent = new Intent(context, ReportDateSelectActivity.class);
+	             intent.putExtra("auth_token", auth_token);
+	             startActivity(intent); 
+			}
+		});
 	}
 	
 	class CreateAccountsButtonTask extends AsyncTask<String, Void, HttpResponse> {

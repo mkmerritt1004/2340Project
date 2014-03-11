@@ -5,6 +5,7 @@ import java.util.Date;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,6 +15,7 @@ import android.widget.DatePicker;
 public class ReportDateSelectActivity extends Activity {
 	
 	private Button submitButton;
+	private Button backButton;
 	private DatePicker startDatePicker;
 	private DatePicker endDatePicker;
 	private Date startDate;
@@ -34,6 +36,7 @@ public class ReportDateSelectActivity extends Activity {
 	public void addListenerOnButton() {
 		final Context context = this;
 		submitButton = (Button) findViewById(R.id.submitButton);
+		backButton = (Button) findViewById(R.id.backButton);
 		startDatePicker = (DatePicker)findViewById(R.id.startDatePicker);
 		endDatePicker = (DatePicker)findViewById(R.id.endDatePicker);
 		startDatePicker.setCalendarViewShown(false);
@@ -48,17 +51,20 @@ public class ReportDateSelectActivity extends Activity {
 						startDatePicker.getMonth(), startDatePicker.getDayOfMonth());
 				endDate = new Date(endDatePicker.getYear(), 
 						endDatePicker.getMonth(), endDatePicker.getDayOfMonth());
+				Intent intent = new Intent(context, SpendingReportActivity.class);
+				startActivity(intent);
 			}
 		});
-		
+		backButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent(context, AccountsOverviewActivity.class);
+				startActivity(intent);
+			}
+		});
 	}
 	
-	public Date getStartDate() {
-		return startDate;
-	}
 	
-	public Date getEndDate() {
-		return endDate;
-	}
 	
 }
