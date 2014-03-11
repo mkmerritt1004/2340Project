@@ -66,6 +66,7 @@
     <string name="end">End</string>
     <string name="date_range">Select Date Range</string>
     <string name="submit">Submit</string>
+    <string name="back">Back</string>
     
 
 </resources>

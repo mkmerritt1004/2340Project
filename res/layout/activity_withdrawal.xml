@@ -51,7 +51,7 @@
         android:text="@string/effective_date" />
 
     <DatePicker
-        android:id="@+id/datePicker1"
+        android:id="@+id/startDatePicker"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_weight="0.69" />

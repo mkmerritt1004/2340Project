@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 
 public class AccountsOverviewActivity extends Activity {
 	Button newAccountButton;
+	Button SpendingReportButton;
 	LinearLayout layout;
 	String auth_token;
 	

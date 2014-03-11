@@ -76,7 +76,7 @@ public class WithdrawalActivity extends Activity {
 			public void onClick(View arg0) {
 				reason   = (EditText)findViewById(R.id.reason_input);
 				category   = (Spinner)findViewById(R.id.spinner1);
-				effectiveDate   = (DatePicker)findViewById(R.id.datePicker1);
+				effectiveDate   = (DatePicker)findViewById(R.id.startDatePicker);
 				amount   = (EditText)findViewById(R.id.amount_input);
 				String reasonStr = reason.getText().toString();
 				String categoryStr = category.getSelectedItem().toString();

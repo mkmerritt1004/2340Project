@@ -21,7 +21,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <DatePicker
-        android:id="@+id/datePicker1"
+        android:id="@+id/startDatePicker"
         android:layout_width="wrap_content"
         android:layout_height="140dp" />
 
@@ -33,15 +33,21 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <DatePicker
-        android:id="@+id/datePicker2"
+        android:id="@+id/endDatePicker"
         android:layout_width="wrap_content"
         android:layout_height="145dp" />
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/submit" />
 
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical|center_horizontal"
-        android:text="@string/submit" />
+        android:text="@string/back" />
 
 </LinearLayout>
