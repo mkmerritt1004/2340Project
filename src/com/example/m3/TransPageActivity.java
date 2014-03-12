@@ -24,6 +24,7 @@ import android.widget.TextView;
 public class TransPageActivity extends Activity {
 	Button deposit;
 	Button withdrawal;
+	Button back;
 	String auth_token;
 	String account_id;
 	
@@ -63,6 +64,7 @@ public class TransPageActivity extends Activity {
  
 		deposit = (Button) findViewById(R.id.depositButton);
 		withdrawal = (Button) findViewById(R.id.withdrawalButton);
+		back= (Button) findViewById(R.id.button1);
  
 		deposit.setOnClickListener(new OnClickListener() {
  
@@ -79,6 +81,15 @@ public class TransPageActivity extends Activity {
 			@Override
 			public void onClick(View arg0){
 				Intent intent = new Intent(context, WithdrawalActivity.class);
+                intent.putExtra("auth_token", auth_token);
+                intent.putExtra("account_id", account_id);
+				startActivity(intent);
+			}
+		});
+		back.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View arg0){
+				Intent intent = new Intent(context, AccountsOverviewActivity.class);
                 intent.putExtra("auth_token", auth_token);
                 intent.putExtra("account_id", account_id);
 				startActivity(intent);
