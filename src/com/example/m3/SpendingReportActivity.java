@@ -11,13 +11,13 @@ import android.widget.Button;
 
 public class SpendingReportActivity extends Activity {
 
-	private Button backButton2;
-	private double foodCost;
-	private double rentCost;
-	private double entertainmentCost;
-	private double clothingCost;
-	private double otherCost;
-	private double total;
+	Button backButton2;
+	double foodCost;
+	double rentCost;
+	double entertainmentCost;
+	double clothingCost;
+	double otherCost;
+	double total;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
