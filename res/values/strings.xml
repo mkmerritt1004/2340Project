@@ -67,6 +67,7 @@
     <string name="date_range">Select Date Range</string>
     <string name="submit">Submit</string>
     <string name="back">Back</string>
+    <string name="title_activity_report_date_select">Report Date Select</string>
     
 
 </resources>
