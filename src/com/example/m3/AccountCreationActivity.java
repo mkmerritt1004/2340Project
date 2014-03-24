@@ -31,12 +31,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class AccountCreationActivity extends Activity {
-	Button registerButton;
-	EditText name;
-	EditText accountName;
-	EditText balance;
-	EditText interestRate;
-	String auth_token;
+	private Button registerButton;
+	private Button backButton;
+	private EditText name;
+	private EditText accountName;
+	private EditText balance;
+	private EditText interestRate;
+	private String auth_token;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class AccountCreationActivity extends Activity {
 		Intent oldIntent = getIntent();
 		auth_token = oldIntent.getStringExtra("auth_token");
 		setContentView(R.layout.activity_account_creation);
-        addListenerOnCreateButton();
+        addListenersOnButtons();
 	}
 
 	@Override
@@ -59,7 +60,7 @@ public class AccountCreationActivity extends Activity {
         textView.setText(newStr);
     }
 	
-	 public void addListenerOnCreateButton() {
+	 public void addListenersOnButtons() {
 		 
 			final Context context = this;
 	 
@@ -82,6 +83,18 @@ public class AccountCreationActivity extends Activity {
 					
 				}
 	 
+			});
+			
+			backButton = (Button) findViewById(R.id.backButton);
+
+			backButton.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View arg0) {
+					Intent intent = new Intent(context, AccountsOverviewActivity.class);
+	                intent.putExtra("auth_token", auth_token);
+					startActivity(intent);
+				}
 			});
 	    
 		}

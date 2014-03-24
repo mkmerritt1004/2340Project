@@ -3,7 +3,6 @@ package com.example.m3;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.ParseException;
@@ -14,11 +13,10 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-
 import com.example.m3.AccountCreationActivity.accountCreationTask;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -41,10 +39,13 @@ public class WithdrawalActivity extends Activity {
 	private DatePicker effectiveDate;
 	private EditText amount;
 
+	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_withdrawal);
+		effectiveDate   = (DatePicker)findViewById(R.id.startDatePicker);
+		effectiveDate.setCalendarViewShown(false);
 		Intent oldIntent = getIntent();
 		auth_token = oldIntent.getStringExtra("auth_token");
         account_id = oldIntent.getStringExtra("account_id");
@@ -76,7 +77,6 @@ public class WithdrawalActivity extends Activity {
 			public void onClick(View arg0) {
 				reason   = (EditText)findViewById(R.id.reason_input);
 				category   = (Spinner)findViewById(R.id.spinner1);
-				effectiveDate   = (DatePicker)findViewById(R.id.startDatePicker);
 				amount   = (EditText)findViewById(R.id.amount_input);
 				String reasonStr = reason.getText().toString();
 				String categoryStr = category.getSelectedItem().toString();
