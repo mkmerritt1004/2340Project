@@ -14,15 +14,11 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-
-import com.example.m3.RegistrationActivity.RegisterTask;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.text.Editable;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
