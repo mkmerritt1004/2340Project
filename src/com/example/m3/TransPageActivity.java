@@ -1,6 +1,7 @@
 package com.example.m3;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
@@ -37,7 +38,32 @@ public class TransPageActivity extends Activity {
 		auth_token = oldIntent.getStringExtra("auth_token");
         account_id = oldIntent.getStringExtra("account_id");
 		final Context context = this;
-        new GetAccountInfoTask(context).execute();
+        HttpResponse response;
+		try {
+			response = new DatabaseInterface().getAccountInfo(auth_token, account_id);
+			if ( response.getStatusLine().getStatusCode() == 200 ){
+				 String stringResponse = EntityUtils.toString(response.getEntity());
+				 String balance = stringResponse.split(":")[3];
+				 String name = stringResponse.split(":")[2];
+				 addBalanceToScreen(balance.substring(0, balance.length() - 1));
+				 addNameToScreen(name.split("\"")[1]);
+			} else {
+				addBalanceToScreen(EntityUtils.toString(response.getEntity()));
+			}
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (ExecutionException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+       
 		addListenerOnButton();
 	}
 
@@ -98,59 +124,5 @@ public class TransPageActivity extends Activity {
 
 	}
 	
-	class GetAccountInfoTask extends AsyncTask<String, Void, HttpResponse> {
 
-		private Context context;
-		private HttpResponse response;
-		
-		private GetAccountInfoTask(Context context) {
-		    this.context = context.getApplicationContext();
-		}
-
-	    protected HttpResponse doInBackground(String... inputs) {
-	    	
-	    	HttpClient httpclient = new DefaultHttpClient();
-	        HttpGet httpget = new HttpGet("http://intense-garden-9893.herokuapp.com/api/accounts/" + account_id + ".json?authentication_token=" + auth_token);
-	        try {
-	            // Execute HTTP Get Request
-	            response = httpclient.execute(httpget);
-	        } catch (ClientProtocolException e) {
-	            // TODO Auto-generated catch block
-	            System.out.println("CPE"+e);
-	        } catch (IOException e) {
-	            // TODO Auto-generated catch block
-	            System.out.println("IOE"+e);
-	        }
-	        return response;
-	    }
-
-	    protected void onPostExecute(HttpResponse response) {
-			if ( response.getStatusLine().getStatusCode() == 200 ){
-				try {
-					String stringResponse = EntityUtils.toString(response.getEntity());
-					String balance = stringResponse.split(":")[3];
-					String name = stringResponse.split(":")[2];
-					addBalanceToScreen(balance.substring(0, balance.length() - 1));
-					addNameToScreen(name.split("\"")[1]);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			else{
-				try {
-					addBalanceToScreen(EntityUtils.toString(response.getEntity()));
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-	    }
-	}
 }

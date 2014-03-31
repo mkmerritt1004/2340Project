@@ -3,6 +3,7 @@ package com.example.m3;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -14,8 +15,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-
-import com.example.m3.RegistrationActivity.RegisterTask;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -79,7 +78,29 @@ public class AccountCreationActivity extends Activity {
 					String balanceDouble = balance.getText().toString();
 					String interestRateDouble = interestRate.getText().toString();
 
-					new accountCreationTask(context).execute(nameStr, accountNameStr, balanceDouble, interestRateDouble);
+					try {
+						HttpResponse response = new DatabaseInterface().createAccount(nameStr, accountNameStr, balanceDouble, interestRateDouble, auth_token);
+						if (response.getStatusLine().getStatusCode() == 201 ){
+							Intent intent = new Intent(context, AccountsOverviewActivity.class);
+							intent.putExtra("auth_token", auth_token);
+							startActivity(intent); 
+						}
+						else{
+							updateTextView(EntityUtils.toString(response.getEntity()));
+						}
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (ExecutionException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					
 				}
 	 
@@ -98,58 +119,6 @@ public class AccountCreationActivity extends Activity {
 			});
 	    
 		}
-	 class accountCreationTask extends AsyncTask<String, Void, HttpResponse> {
-
-			private Context context;
-			private HttpResponse response;
-			
-			private accountCreationTask(Context context) {
-			    this.context = context.getApplicationContext();
-			}
-
-		    protected HttpResponse doInBackground(String... inputs) {
-		    	HttpClient httpclient = new DefaultHttpClient();
-		        HttpPost httppost = new HttpPost("http://intense-garden-9893.herokuapp.com/api/accounts?authentication_token=" + auth_token);
-
-		        try {
-		            // Add your data
-		            List<NameValuePair> params = new ArrayList<NameValuePair>(4);
-		            params.add(new BasicNameValuePair("[account][display_name]", inputs[0]));
-		            params.add(new BasicNameValuePair("[account][full_name]", inputs[1]));
-		            params.add(new BasicNameValuePair("[account][balance]", inputs[2]));
-		            params.add(new BasicNameValuePair("[account][interest_rate]", inputs[3]));
-		            httppost.setEntity(new UrlEncodedFormEntity(params));
-		            // Execute HTTP Post Request
-		            response = httpclient.execute(httppost);
-		            
-		        } catch (ClientProtocolException e) {
-		            // TODO Auto-generated catch block
-		            System.out.println("CPE"+e);
-		        } catch (IOException e) {
-		            // TODO Auto-generated catch block
-		            System.out.println("IOE"+e);
-		        }
-		        return response;
-		    }
-
-		    protected void onPostExecute(HttpResponse response) {
-				if ( response.getStatusLine().getStatusCode() == 201 ){
-					Intent intent = new Intent(context, AccountsOverviewActivity.class);
-					intent.putExtra("auth_token", auth_token);
-					startActivity(intent); 
-				}
-				else{
-					try {
-						updateTextView(EntityUtils.toString(response.getEntity()));
-					} catch (ParseException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-		    }
-		}
+	 
 
 }

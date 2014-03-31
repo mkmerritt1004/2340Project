@@ -1,31 +1,16 @@
 package com.example.m3;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.ParseException;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.os.AsyncTask;
-import android.os.Build;
+import android.net.ParseException;
 import android.os.Bundle;
 import android.app.Activity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -34,8 +19,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.content.Context;
 import android.content.Intent;
-
-
 
 public class MainActivity extends Activity {
 	
@@ -78,69 +61,41 @@ public class MainActivity extends Activity {
 				String userEditStr = userEdit.getText().toString();
 				String passEditStr = passEdit.getText().toString();
 
-				new CheckLoginTask(context).execute(userEditStr, passEditStr);
-				
-			}
- 
-		});
-    
-	}
-	
-	class CheckLoginTask extends AsyncTask<String, Void, HttpResponse> {
-
-		private Context context;
-		private HttpResponse response;
-		
-		private CheckLoginTask(Context context) {
-		    this.context = context.getApplicationContext();
-		}
-
-	    protected HttpResponse doInBackground(String... inputs) {
-	    	HttpClient httpclient = new DefaultHttpClient();
-	        HttpPost httppost = new HttpPost("http://intense-garden-9893.herokuapp.com/api/users/sign_in.json");
-
-	        try {
-	            // Add your data
-	            List<NameValuePair> params = new ArrayList<NameValuePair>(2);
-	            params.add(new BasicNameValuePair("[user][email]", inputs[0]));
-	            params.add(new BasicNameValuePair("[user][password]", inputs[1]));
-	            httppost.setEntity(new UrlEncodedFormEntity(params));
-
-	            // Execute HTTP Post Request
-	            response = httpclient.execute(httppost);
-	            
-	        } catch (ClientProtocolException e) {
-	            // TODO Auto-generated catch block
-	            System.out.println("CPE"+e);
-	        } catch (IOException e) {
-	            // TODO Auto-generated catch block
-	            System.out.println("IOE"+e);
-	        }
-	        return response;
-	    }
-
-	    protected void onPostExecute(HttpResponse response) {
-			if ( response.getStatusLine().getStatusCode() == 200 ){
 				try {
-					String stringResponse = EntityUtils.toString(response.getEntity());
-					String[] splitResponse = stringResponse.split(":");
-					String auth_token = splitResponse[2].substring(1,splitResponse[2].length() - 9);
-					Intent intent = new Intent(context, SuccessScreenActivity.class);
-					intent.putExtra("auth_token", auth_token);
-					startActivity(intent); 
-				} catch (ParseException e) {
+					HttpResponse response = new DatabaseInterface().login(userEditStr, passEditStr);
+					if ( response.getStatusLine().getStatusCode() == 200 ){
+						String stringResponse = EntityUtils.toString(response.getEntity());
+						JSONObject json = new JSONObject(stringResponse);
+						String auth_token = json.getString("auth_token");
+						Intent intent = new Intent(context, SuccessScreenActivity.class);
+						intent.putExtra("auth_token", auth_token);
+						startActivity(intent); 
+					}
+					else{
+						updateTextView("Incorrect Username or Password. Try Again.");
+					}
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ExecutionException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (org.apache.http.ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-
+				
+				
 			}
-			else{
-				updateTextView("Incorrect Username or Password. Try Again.");
-			}
-	    }
+ 
+		});
+    
 	}
 
 }

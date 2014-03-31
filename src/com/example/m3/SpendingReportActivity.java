@@ -1,6 +1,8 @@
 package com.example.m3;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
@@ -52,7 +54,47 @@ public class SpendingReportActivity extends Activity {
 		startDateTextView.setText(startDate);
 		endDateTextView.setText(endDate);
 		final Context context = this;
-        new GetCategorySumsTask(context).execute();
+		try {
+			HttpResponse response = new DatabaseInterface().getCategorySums(startDate, endDate, auth_token);
+	        if ( response.getStatusLine().getStatusCode() == 200 ){
+				try {
+					String stringResponse = EntityUtils.toString(response.getEntity());
+					JSONObject json = new JSONObject(stringResponse);
+					foodSum = json.getString("food");
+					entertainmentSum = json.getString("entertainment");
+					clothingSum = json.getString("clothing");
+					rentSum = json.getString("rent");
+					otherSum = json.getString("other");
+					total = json.getString("total");
+					updateSums();
+					
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} else {
+				updateView(EntityUtils.toString(response.getEntity()));
+			}
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (ExecutionException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		addListenerToButton();
 	}
 	
@@ -101,72 +143,6 @@ public class SpendingReportActivity extends Activity {
 		errorsTextView.setText(errors);
 	}
 	
-	class GetCategorySumsTask extends AsyncTask<String, Void, HttpResponse> {
-
-		private Context context;
-		private HttpResponse response;
-		
-		private GetCategorySumsTask(Context context) {
-		    this.context = context.getApplicationContext();
-		}
-
-	    protected HttpResponse doInBackground(String... inputs) {
-	    	
-	    	HttpClient httpclient = new DefaultHttpClient();
-	    	String url = "http://intense-garden-9893.herokuapp.com/api/users/categories.json?authentication_token=" 
-	        		+ auth_token + "&start_date=" + startDate + "&end_date=" + endDate;
-	    	Log.d(url, url);
-	        HttpGet httpget = new HttpGet(url);
-
-	        try {
-	            // Execute HTTP Get Request
-	            response = httpclient.execute(httpget);
-	        } catch (ClientProtocolException e) {
-	            // TODO Auto-generated catch block
-	            System.out.println("CPE"+e);
-	        } catch (IOException e) {
-	            // TODO Auto-generated catch block
-	            System.out.println("IOE"+e);
-	        }
-	        return response;
-	    }
-
-	    protected void onPostExecute(HttpResponse response) {
-			if ( response.getStatusLine().getStatusCode() == 200 ){
-				try {
-					String stringResponse = EntityUtils.toString(response.getEntity());
-					JSONObject json = new JSONObject(stringResponse);
-					foodSum = json.getString("food");
-					entertainmentSum = json.getString("entertainment");
-					clothingSum = json.getString("clothing");
-					rentSum = json.getString("rent");
-					otherSum = json.getString("other");
-					total = json.getString("total");
-					updateSums();
-					
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			else{
-				try {
-					updateView(EntityUtils.toString(response.getEntity()));
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-	    }
-	}
+	
 	
 }

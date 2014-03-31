@@ -2,6 +2,8 @@ package com.example.m3;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
@@ -36,7 +38,54 @@ public class AccountsOverviewActivity extends Activity {
         setContentView(R.layout.activity_accounts_overview);
         layout = (LinearLayout) findViewById(R.id.activityAccountsOverview);
 		final Context context = this;
-        new CreateAccountsButtonTask(context).execute();
+        HttpResponse response;
+		try {
+			response = new DatabaseInterface().getAccounts(auth_token);
+			if ( response.getStatusLine().getStatusCode() == 200 ){
+				try {
+					String stringResponse = EntityUtils.toString(response.getEntity());
+					if (stringResponse.length() > 10) {
+						String arrayStringResponse = stringResponse.substring(1, stringResponse.length() - 1);
+						String[] accounts = arrayStringResponse.split("\\}");
+						ArrayList<String> accountNameArray = new ArrayList<String>();
+						ArrayList<String> accountIdArray = new ArrayList<String>();
+						for (String account : accounts) {
+							String[] attr = account.substring(1).split(",");
+							accountNameArray.add(attr[2]);
+							accountIdArray.add(attr[0]);
+						}
+						for (int i = 0; i < accountNameArray.size(); i++) {
+							String id = accountIdArray.get(i).split(":")[1];
+							createButton(accountNameArray.get(i).substring(16, 
+									accountNameArray.get(i).length() - 1), id );
+						}
+					}
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else{
+				try {
+					createButton(EntityUtils.toString(response.getEntity()), "0");
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (ExecutionException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
         addListenerOnCreateButton();
     }
 
@@ -93,73 +142,6 @@ public class AccountsOverviewActivity extends Activity {
 		});
 	}
 	
-	class CreateAccountsButtonTask extends AsyncTask<String, Void, HttpResponse> {
-
-		private Context context;
-		private HttpResponse response;
-		
-		private CreateAccountsButtonTask(Context context) {
-		    this.context = context.getApplicationContext();
-		}
-
-	    protected HttpResponse doInBackground(String... inputs) {
-	    	
-	    	HttpClient httpclient = new DefaultHttpClient();
-	        HttpGet httpget = new HttpGet("http://intense-garden-9893.herokuapp.com/api/users/accounts.json?authentication_token=" + auth_token);
-
-	        try {
-	            // Execute HTTP Get Request
-	            response = httpclient.execute(httpget);
-	        } catch (ClientProtocolException e) {
-	            // TODO Auto-generated catch block
-	            System.out.println("CPE"+e);
-	        } catch (IOException e) {
-	            // TODO Auto-generated catch block
-	            System.out.println("IOE"+e);
-	        }
-	        return response;
-	    }
-
-	    protected void onPostExecute(HttpResponse response) {
-			if ( response.getStatusLine().getStatusCode() == 200 ){
-				try {
-					String stringResponse = EntityUtils.toString(response.getEntity());
-					if (stringResponse.length() > 10) {
-						String arrayStringResponse = stringResponse.substring(1, stringResponse.length() - 1);
-						String[] accounts = arrayStringResponse.split("\\}");
-						ArrayList<String> accountNameArray = new ArrayList<String>();
-						ArrayList<String> accountIdArray = new ArrayList<String>();
-						for (String account : accounts) {
-							String[] attr = account.substring(1).split(",");
-							accountNameArray.add(attr[2]);
-							accountIdArray.add(attr[0]);
-						}
-						for (int i = 0; i < accountNameArray.size(); i++) {
-							String id = accountIdArray.get(i).split(":")[1];
-							createButton(accountNameArray.get(i).substring(16, 
-									accountNameArray.get(i).length() - 1), id );
-						}
-					}
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			else{
-				try {
-					createButton(EntityUtils.toString(response.getEntity()), "0");
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-	    }
-	}
+	
 	
 }
