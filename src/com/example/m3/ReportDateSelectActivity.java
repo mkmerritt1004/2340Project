@@ -14,44 +14,48 @@ import android.widget.DatePicker;
 
 public class ReportDateSelectActivity extends Activity {
 	
+	private String auth_token;
 	private Button submitButton;
 	private Button backButton;
 	private DatePicker startDatePicker;
 	private DatePicker endDatePicker;
-	private Date startDate;
-	private Date endDate;
+	private String startDate;
+	private String endDate;
 	
-	@SuppressWarnings("deprecation")
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_report_date_select);
-		addListenerOnButton();
-		this.startDate = new Date(startDatePicker.getYear(),
-				startDatePicker.getMonth(), startDatePicker.getDayOfMonth());
-		this.endDate = new Date(endDatePicker.getYear(), 
-				endDatePicker.getMonth(), endDatePicker.getDayOfMonth());
+		loadElements();		
+		addListenersOnButtons();
 	}
 	
 	@SuppressLint("NewApi")
-	public void addListenerOnButton() {
-		final Context context = this;
+	private void loadElements() {
+		Intent oldIntent = getIntent();
+        auth_token = oldIntent.getStringExtra("auth_token");
 		submitButton = (Button) findViewById(R.id.submitButton);
 		backButton = (Button) findViewById(R.id.backButton);
 		startDatePicker = (DatePicker)findViewById(R.id.startDatePicker);
-		endDatePicker = (DatePicker)findViewById(R.id.endDatePicker);
 		startDatePicker.setCalendarViewShown(false);
+		endDatePicker = (DatePicker)findViewById(R.id.endDatePicker);
 		endDatePicker.setCalendarViewShown(false);
+	}
+	
+	public void addListenersOnButtons() {
+		final Context context = this;
+
+
 		submitButton.setOnClickListener(new OnClickListener() {
-			@SuppressWarnings("deprecation")
 			@Override
 			public void onClick(View arg0) {
-				startDatePicker = (DatePicker)findViewById(R.id.startDatePicker);
-				endDatePicker = (DatePicker)findViewById(R.id.endDatePicker);
-				startDate = new Date(startDatePicker.getYear(),
-						startDatePicker.getMonth(), startDatePicker.getDayOfMonth());
-				endDate = new Date(endDatePicker.getYear(), 
-						endDatePicker.getMonth(), endDatePicker.getDayOfMonth());
 				Intent intent = new Intent(context, SpendingReportActivity.class);
+				startDate = String.format("%02d/%02d/%d", startDatePicker.getMonth() + 1, 
+						startDatePicker.getDayOfMonth(), startDatePicker.getYear());
+				endDate = String.format("%02d/%02d/%d", endDatePicker.getMonth() + 1,
+						 endDatePicker.getDayOfMonth(), endDatePicker.getYear());
+                intent.putExtra("auth_token", auth_token);
+                intent.putExtra("startDate", startDate);
+                intent.putExtra("endDate", endDate);
 				startActivity(intent);
 			}
 		});
@@ -60,6 +64,7 @@ public class ReportDateSelectActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				Intent intent = new Intent(context, AccountsOverviewActivity.class);
+                intent.putExtra("auth_token", auth_token);
 				startActivity(intent);
 			}
 		});

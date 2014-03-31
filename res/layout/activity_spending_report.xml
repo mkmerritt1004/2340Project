@@ -16,13 +16,42 @@
             android:text="@string/spending_report_title"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    </TableRow><TableRow android:id="@+id/tableRow2" android:layout_width="wrap_content" android:layout_height="wrap_content">
+    </TableRow>
+	<TableRow
+        android:id="@+id/dateRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+        
+	    <TextView
+        android:id="@+id/startDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/blank"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+	    
+	    <TextView
+        android:id="@+id/endDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/blank"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+	    
+    </TableRow>
+ 
+
+<TableRow android:id="@+id/tableRow2" android:layout_width="wrap_content" android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/food" />
+        
+        <TextView
+            android:id="@+id/food_sum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/blank" />
 
     </TableRow>
 
@@ -36,6 +65,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/rent" />
+        
+        <TextView
+            android:id="@+id/rent_sum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/blank" />
 
     </TableRow>
 
@@ -49,6 +84,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/entertainment" />
+        
+        <TextView
+            android:id="@+id/entertainment_sum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/blank" />
 
     </TableRow>
 
@@ -62,6 +103,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/clothing" />
+        
+        <TextView
+            android:id="@+id/clothing_sum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/blank" />
 
     </TableRow>
 
@@ -77,6 +124,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/other" />
+        
+        <TextView
+            android:id="@+id/other_sum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/blank" />
 
     </TableRow>
 
@@ -90,6 +143,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/total" />
+        
+        <TextView
+            android:id="@+id/total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/blank" />
 
     </TableRow>
 
@@ -99,11 +158,18 @@
         android:layout_height="wrap_content" >
 
         <Button
-            android:id="@+id/backButton2"
+            android:id="@+id/backButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/back" />
 
     </TableRow>
+
+    <TextView
+        android:id="@+id/errors"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/blank"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </TableLayout>

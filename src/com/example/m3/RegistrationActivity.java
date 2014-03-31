@@ -3,6 +3,7 @@ package com.example.m3;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -75,77 +76,45 @@ public class RegistrationActivity extends Activity {
 				String passwordStr = password.getText().toString();
 				String passwordConfirmationStr = passwordConfirmation.getText().toString();
 
-				new RegisterTask(context).execute(nameStr, emailStr, passwordStr, passwordConfirmationStr);
+				try {
+					HttpResponse response = new DatabaseInterface().registerUser(nameStr, emailStr, passwordStr, passwordConfirmationStr);
+					if ( response.getStatusLine().getStatusCode() == 201 ){
+						try {
+							String stringResponse = EntityUtils.toString(response.getEntity());
+							String[] splitResponse = stringResponse.split(":");
+							String auth_token = splitResponse[3].substring(1, splitResponse[3].length() - 2);
+							Intent intent = new Intent(context, SuccessScreenActivity.class);
+							intent.putExtra("auth_token", auth_token);
+							startActivity(intent); 
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					else{
+						try {
+							updateTextView(EntityUtils.toString(response.getEntity()));
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ExecutionException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
-			}
- 
+		    }
 		});
-    
-	}
-    
-	class RegisterTask extends AsyncTask<String, Void, HttpResponse> {
-
-		private Context context;
-		private HttpResponse response;
-		
-		private RegisterTask(Context context) {
-		    this.context = context.getApplicationContext();
-		}
-
-	    protected HttpResponse doInBackground(String... inputs) {
-	    	HttpClient httpclient = new DefaultHttpClient();
-	        HttpPost httppost = new HttpPost("http://intense-garden-9893.herokuapp.com/api/users.json");
-
-	        try {
-	            // Add your data
-	            List<NameValuePair> params = new ArrayList<NameValuePair>(4);
-	            params.add(new BasicNameValuePair("[user][name]", inputs[0]));
-	            params.add(new BasicNameValuePair("[user][email]", inputs[1]));
-	            params.add(new BasicNameValuePair("[user][password]", inputs[2]));
-	            params.add(new BasicNameValuePair("[user][password_confirmation]", inputs[3]));
-	            httppost.setEntity(new UrlEncodedFormEntity(params));
-
-	            // Execute HTTP Post Request
-	            response = httpclient.execute(httppost);
-	            
-	        } catch (ClientProtocolException e) {
-	            // TODO Auto-generated catch block
-	            System.out.println("CPE"+e);
-	        } catch (IOException e) {
-	            // TODO Auto-generated catch block
-	            System.out.println("IOE"+e);
-	        }
-	        return response;
-	    }
-
-	    protected void onPostExecute(HttpResponse response) {
-			if ( response.getStatusLine().getStatusCode() == 201 ){
-				try {
-					String stringResponse = EntityUtils.toString(response.getEntity());
-					String[] splitResponse = stringResponse.split(":");
-					String auth_token = splitResponse[3].substring(1, splitResponse[3].length() - 2);
-					Intent intent = new Intent(context, SuccessScreenActivity.class);
-					intent.putExtra("auth_token", auth_token);
-					startActivity(intent); 
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			else{
-				try {
-					updateTextView(EntityUtils.toString(response.getEntity()));
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-	    }
+ 
 	}
 }

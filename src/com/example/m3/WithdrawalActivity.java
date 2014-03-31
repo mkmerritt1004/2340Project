@@ -3,6 +3,7 @@ package com.example.m3;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -15,10 +16,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-import com.example.m3.AccountCreationActivity.accountCreationTask;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -41,10 +41,13 @@ public class WithdrawalActivity extends Activity {
 	private DatePicker effectiveDate;
 	private EditText amount;
 
+	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_withdrawal);
+		effectiveDate   = (DatePicker)findViewById(R.id.startDatePicker);
+		effectiveDate.setCalendarViewShown(false);
 		Intent oldIntent = getIntent();
 		auth_token = oldIntent.getStringExtra("auth_token");
         account_id = oldIntent.getStringExtra("account_id");
@@ -76,7 +79,6 @@ public class WithdrawalActivity extends Activity {
 			public void onClick(View arg0) {
 				reason   = (EditText)findViewById(R.id.reason_input);
 				category   = (Spinner)findViewById(R.id.spinner1);
-				effectiveDate   = (DatePicker)findViewById(R.id.startDatePicker);
 				amount   = (EditText)findViewById(R.id.amount_input);
 				String reasonStr = reason.getText().toString();
 				String categoryStr = category.getSelectedItem().toString();
@@ -86,58 +88,23 @@ public class WithdrawalActivity extends Activity {
 				String date= day+"/"+month+"/"+year;
 				String amountStr = amount.getText().toString();
 
-				new withdrawTask(context).execute(reasonStr, categoryStr, date, amountStr, account_id);
-				
-			}
- 
-		});
-    
-	}
- class withdrawTask extends AsyncTask<String, Void, HttpResponse> {
-
-		private Context context;
-		private HttpResponse response;
-		
-		private withdrawTask(Context context) {
-		    this.context = context.getApplicationContext();
-		}
-
-	    protected HttpResponse doInBackground(String... inputs) {
-	    	HttpClient httpclient = new DefaultHttpClient();
-	        HttpPost httppost = new HttpPost("http://intense-garden-9893.herokuapp.com/api/withdrawals?authentication_token=" + auth_token);
-
-	        try {
-	            // Add your data
-	            List<NameValuePair> params = new ArrayList<NameValuePair>(5);
-	            params.add(new BasicNameValuePair("[withdrawal][reason]", inputs[0]));
-	            params.add(new BasicNameValuePair("[withdrawal][category]", inputs[1]));
-	            params.add(new BasicNameValuePair("[withdrawal][effective_date]", inputs[2]));
-	            params.add(new BasicNameValuePair("[withdrawal][amount]", inputs[3]));
-	            params.add(new BasicNameValuePair("[withdrawal][account_id]", inputs[4]));
-	            httppost.setEntity(new UrlEncodedFormEntity(params));
-	            // Execute HTTP Post Request
-	            response = httpclient.execute(httppost);
-	            
-	        } catch (ClientProtocolException e) {
-	            // TODO Auto-generated catch block
-	            System.out.println("CPE"+e);
-	        } catch (IOException e) {
-	            // TODO Auto-generated catch block
-	            System.out.println("IOE"+e);
-	        }
-	        return response;
-	    }
-
-	    protected void onPostExecute(HttpResponse response) {
-			if ( response.getStatusLine().getStatusCode() == 201 ){
-				Intent intent = new Intent(context, TransPageActivity.class);
-				intent.putExtra("auth_token", auth_token);
-                intent.putExtra("account_id", account_id);
-				startActivity(intent); 
-			}
-			else{
 				try {
-					updateTextView(EntityUtils.toString(response.getEntity()));
+					HttpResponse response = new DatabaseInterface().withdraw(reasonStr, categoryStr, date, amountStr, account_id, auth_token);
+					if ( response.getStatusLine().getStatusCode() == 201 ){
+						Intent intent = new Intent(context, TransPageActivity.class);
+						intent.putExtra("auth_token", auth_token);
+			            intent.putExtra("account_id", account_id);
+						startActivity(intent); 
+					}
+					else{
+						updateTextView(EntityUtils.toString(response.getEntity()));
+					}
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ExecutionException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -145,8 +112,12 @@ public class WithdrawalActivity extends Activity {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				
+				
 			}
-	    }
+ 
+		});
+    
 	}
 
 }
