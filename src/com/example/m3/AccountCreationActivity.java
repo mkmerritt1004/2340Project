@@ -1,22 +1,12 @@
 package com.example.m3;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.ParseException;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
@@ -38,21 +28,40 @@ import android.widget.TextView;
 public class AccountCreationActivity extends Activity {
     
     /**
-    * The "Register" button.
+    * Buton registerButton.
     */
     Button registerButton;
     
+    /**
+     * EditText name.
+     */
     EditText name;
+    
+    /**
+     * EditText accountName.
+     */
     EditText accountName;
+    
+    /**
+     * EditText balance.
+     */
     EditText balance;
+    
+    /**
+     * EditText interestRate.
+     */
     EditText interestRate;
-    String auth_token;
+    
+    /**
+     * String authToken.
+     */
+    String authToken;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent oldIntent = getIntent();
-        auth_token = oldIntent.getStringExtra("auth_token");
+        authToken = oldIntent.getStringExtra("authToken");
         setContentView(R.layout.activity_account_creation);
         addListenerOnCreateButton();
     }
@@ -64,11 +73,19 @@ public class AccountCreationActivity extends Activity {
         return true;
     }
     
+    /**
+     * update text views.
+     * 
+     * @param newStr new string for update
+     */
     public void updateTextView(String newStr) {
         TextView textView = (TextView) findViewById(R.id.textView6);
         textView.setText(newStr);
     }
     
+    /**
+     * Adds button listener on button.
+     */
     public void addListenerOnCreateButton() {
 
         final Context context = this;
@@ -79,10 +96,10 @@ public class AccountCreationActivity extends Activity {
 
             @Override
             public void onClick(View arg0) {
-                name   = (EditText)findViewById(R.id.editText1);
-                accountName   = (EditText)findViewById(R.id.editText2);
-                balance   = (EditText)findViewById(R.id.editText3);
-                interestRate   = (EditText)findViewById(R.id.editText4);
+                name   = (EditText) findViewById(R.id.editText1);
+                accountName   = (EditText) findViewById(R.id.editText2);
+                balance   = (EditText) findViewById(R.id.editText3);
+                interestRate   = (EditText) findViewById(R.id.editText4);
                 String nameStr = name.getText().toString();
                 String accountNameStr = accountName.getText().toString();
                 String balanceDouble = balance.getText().toString();
@@ -90,27 +107,23 @@ public class AccountCreationActivity extends Activity {
 
                 try {
                     HttpResponse response = new DatabaseInterface().registerUser(nameStr, accountNameStr, balanceDouble, interestRateDouble);
-                    if ( response.getStatusLine().getStatusCode() == 201 ){
+                    if ( response.getStatusLine().getStatusCode() == 201 ) {
                         Intent intent = new Intent(context, AccountsOverviewActivity.class);
-                        intent.putExtra("auth_token", auth_token);
+                        intent.putExtra("authToken", authToken);
                         startActivity(intent); 
                     }
                     else {
                         try {
                             updateTextView(EntityUtils.toString(response.getEntity()));
                         } catch (ParseException e) {
-                            // TODO Auto-generated catch block
                             e.printStackTrace();
                         } catch (IOException e) {
-                            // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
                     }
                 } catch (InterruptedException e1) {
-                    // TODO Auto-generated catch block
                     e1.printStackTrace();
                 } catch (ExecutionException e1) {
-                    // TODO Auto-generated catch block
                     e1.printStackTrace();
                 }
 
