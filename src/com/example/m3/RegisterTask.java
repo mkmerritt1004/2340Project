@@ -47,10 +47,8 @@ class RegisterTask extends AsyncTask<String, Void, HttpResponse> {
             response = httpclient.execute(httppost);
             
         } catch (ClientProtocolException e) {
-            // TODO Auto-generated catch block
             System.out.println("CPE" + e);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             System.out.println("IOE" + e);
         }
         return response;
