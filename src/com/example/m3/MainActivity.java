@@ -104,19 +104,14 @@ public class MainActivity extends Activity {
                         updateTextView("Incorrect Username or Password. Try Again.");
                     }
                 } catch (InterruptedException e1) {
-                    // TODO Auto-generated catch block
                     e1.printStackTrace();
                 } catch (ExecutionException e1) {
-                    // TODO Auto-generated catch block
                     e1.printStackTrace();
                 } catch (org.apache.http.ParseException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 } catch (JSONException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
                 
