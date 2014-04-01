@@ -23,8 +23,18 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+/**
+ * Activity class representing and account's overview.
+ * 
+ * @author Tripp
+ * @version 1.0
+ */
 public class AccountsOverviewActivity extends Activity {
-	Button newAccountButton;
+    
+	/**
+     * newAccountButton.
+     */
+    Button newAccountButton;
 	Button spendingReportButton;
 	LinearLayout layout;
 	String auth_token;

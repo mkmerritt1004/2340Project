@@ -19,7 +19,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class DepositActivity extends Activity {
-	private String auth_token;
+	
+	/**
+	 * Authentication token string instance variable.
+	 */
+    private String auth_token;
 	private String account_id;
 	private Button depositButton;
 	private EditText source;

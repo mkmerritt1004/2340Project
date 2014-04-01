@@ -21,7 +21,10 @@ import android.os.AsyncTask;
 
 class DepositTask extends AsyncTask<String, Void, HttpResponse> {
 
-	private HttpResponse response;
+	/**
+	 * HttpResponse response instance variable.
+	 */
+    private HttpResponse response;
 
     protected HttpResponse doInBackground(String... inputs) {
     	HttpClient httpclient = new DefaultHttpClient();

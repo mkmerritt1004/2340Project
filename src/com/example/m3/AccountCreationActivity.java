@@ -26,8 +26,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+/**
+ * Activity class that represents account creation.
+ * 
+ * @author Tripp Roberts
+ * @version 1.0
+ *
+ */
 public class AccountCreationActivity extends Activity {
-	Button registerButton;
+    
+	/**
+    * The "Register" button.
+    */
+    Button registerButton;
+    
 	EditText name;
 	EditText accountName;
 	EditText balance;

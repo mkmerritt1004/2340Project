@@ -18,7 +18,10 @@ import android.util.Log;
 
 class GetCategorySumsTask extends AsyncTask<String, Void, HttpResponse> {
 
-	private HttpResponse response;
+	/**
+	 * HttpResponse response instance variable.
+	 */
+    private HttpResponse response;
 
     protected HttpResponse doInBackground(String... inputs) {
     	

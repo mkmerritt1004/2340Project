@@ -15,7 +15,10 @@ import android.os.AsyncTask;
 
 class GetAccountInfoTask extends AsyncTask<String, Void, HttpResponse> {
 
-	private HttpResponse response;
+	/**
+	 * HttpResponse reponse instance variable.
+	 */
+    private HttpResponse response;
 
     protected HttpResponse doInBackground(String... inputs) {
     	

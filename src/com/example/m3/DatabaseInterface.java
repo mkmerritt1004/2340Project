@@ -12,9 +12,8 @@ public class DatabaseInterface {
 	 * Registers user
 	 * @returns the http response 
 	 */
-	
-	public HttpResponse registerUser(String name, String email, String password, String passwordConfirmation) throws InterruptedException, ExecutionException {
-		return new RegisterTask().execute(url, name, email, password, passwordConfirmation).get();
+    public HttpResponse registerUser(String name, String email, String password, String passwordConfirmation) throws InterruptedException, ExecutionException {
+        return new RegisterTask().execute(url, name, email, password, passwordConfirmation).get();
 	}
 
 	/**
