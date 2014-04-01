@@ -15,10 +15,21 @@ import org.apache.http.message.BasicNameValuePair;
 
 import android.os.AsyncTask;
 
+/**
+ * This class represents the action to register a user.
+ * @author tripproberts
+ *
+ */
+
 class RegisterTask extends AsyncTask<String, Void, HttpResponse> {
 
-	private HttpResponse response;
+	/**
+	 * The response from the server.
+	 */
 	
+    private HttpResponse response;
+    
+    @Override
     protected HttpResponse doInBackground(String... inputs) {
     	HttpClient httpclient = new DefaultHttpClient();
         HttpPost httppost = new HttpPost(inputs[0] + "/users.json");
@@ -37,10 +48,10 @@ class RegisterTask extends AsyncTask<String, Void, HttpResponse> {
             
         } catch (ClientProtocolException e) {
             // TODO Auto-generated catch block
-            System.out.println("CPE"+e);
+            System.out.println("CPE" + e);
         } catch (IOException e) {
             // TODO Auto-generated catch block
-            System.out.println("IOE"+e);
+            System.out.println("IOE" + e);
         }
         return response;
     }

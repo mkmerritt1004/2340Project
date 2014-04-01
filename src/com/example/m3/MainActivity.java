@@ -8,7 +8,6 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.net.ParseException;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -20,11 +19,30 @@ import android.widget.TextView;
 import android.content.Context;
 import android.content.Intent;
 
+/**
+ * This class represents the activity for logging in.
+ *
+ */
+
 public class MainActivity extends Activity {
-	
-	Button loginButton;
-	EditText userEdit;
-	EditText passEdit;
+    
+    /**
+     * Login button.
+     */
+    
+    Button loginButton;
+    
+    /**
+     * Edit box containing username.
+     */
+    
+    EditText userEdit;
+    
+    /**
+     * Edit box containing password.
+     */
+    
+    EditText passEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,62 +58,73 @@ public class MainActivity extends Activity {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+    
+    /**
+     * Updates a specific text view on the activity.
+     * @param newStr New string to be added.
+     */
+    
     public void updateTextView(String newStr) {
 
         TextView textView = (TextView) findViewById(R.id.textView4);
         textView.setText(newStr);
     }
     
-	public void addListenerOnButton() {
-		 
-		final Context context = this;
- 
-		loginButton = (Button) findViewById(R.id.loginButton);
- 
-		loginButton.setOnClickListener(new OnClickListener() {
- 
-			@Override
-			public void onClick(View arg0) {
-				userEdit   = (EditText)findViewById(R.id.editText1);
-				passEdit   = (EditText)findViewById(R.id.editText2);
-				String userEditStr = userEdit.getText().toString();
-				String passEditStr = passEdit.getText().toString();
-
-				try {
-					HttpResponse response = new DatabaseInterface().login(userEditStr, passEditStr);
-					if ( response.getStatusLine().getStatusCode() == 200 ){
-						String stringResponse = EntityUtils.toString(response.getEntity());
-						JSONObject json = new JSONObject(stringResponse);
-						String auth_token = json.getString("auth_token");
-						Intent intent = new Intent(context, SuccessScreenActivity.class);
-						intent.putExtra("auth_token", auth_token);
-						startActivity(intent); 
-					}
-					else{
-						updateTextView("Incorrect Username or Password. Try Again.");
-					}
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (ExecutionException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (org.apache.http.ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-				
-			}
- 
-		});
+    /**
+     * Adds listener to login button.
+     */
     
-	}
+    public void addListenerOnButton() {
+         
+        final Context context = this;
+ 
+        loginButton = (Button) findViewById(R.id.loginButton);
+ 
+        loginButton.setOnClickListener(new OnClickListener() {
+ 
+            @Override
+            public void onClick(View arg0) {
+                userEdit   = (EditText) findViewById(R.id.editText1);
+                passEdit   = (EditText) findViewById(R.id.editText2);
+                String userEditStr = userEdit.getText().toString();
+                String passEditStr = passEdit.getText().toString();
+
+                try {
+                    HttpResponse response = new DatabaseInterface().login(userEditStr, passEditStr);
+                    if ( response.getStatusLine().getStatusCode() == 200 ) {
+                        String stringResponse = EntityUtils.toString(response.getEntity());
+                        JSONObject json = new JSONObject(stringResponse);
+                        String authTokenStr = "auth_token";
+                        String authToken = json.getString(authTokenStr);
+                        Intent intent = new Intent(context, SuccessScreenActivity.class);
+                        intent.putExtra(authTokenStr, authToken);
+                        startActivity(intent); 
+                    }
+                    else {
+                        updateTextView("Incorrect Username or Password. Try Again.");
+                    }
+                } catch (InterruptedException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                } catch (ExecutionException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                } catch (org.apache.http.ParseException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                
+                
+            }
+ 
+        });
+    
+    }
 
 }

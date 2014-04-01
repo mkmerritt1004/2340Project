@@ -9,54 +9,70 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+/**
+ * This class represents the welcome screen activity.
+ * @author tripproberts
+ *
+ */
+
 public class WelcomeScreenActivity extends Activity {
 
-	Button button;
-	Button regButton;
+	/**
+	 * The back button.
+	 */
 	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		this.setContentView(R.layout.activity_welcome);
-		addListenerOnButton();
-	}
+    Button button;
+    
+    /**
+     * The register button.
+     */
+    
+    Button regButton;
+    
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.setContentView(R.layout.activity_welcome);
+        addListenerOnButton();
+    }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		return super.onCreateOptionsMenu(menu);
-	}
-	
-	public void addListenerOnButton() {
-		 
-		final Context context = this;
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+    }
+    
+    /**
+     * Add listener to login and register button.
+     */
+    
+    public void addListenerOnButton() {
+         
+        final Context context = this;
  
-		button = (Button) findViewById(R.id.loginButton);
-		regButton = (Button) findViewById(R.id.registerButton);
-		
-		regButton.setOnClickListener(new OnClickListener(){
-			
-			@Override
-			public void onClick(View arg0) {
+        button = (Button) findViewById(R.id.loginButton);
+        regButton = (Button) findViewById(R.id.registerButton);
+        
+        regButton.setOnClickListener(new OnClickListener() {
+            
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent(context, RegistrationActivity.class);
+                startActivity(intent);   
+            }
  
-			    Intent intent = new Intent(context, RegistrationActivity.class);
-                            startActivity(intent);   
-			}
+        });
  
-		});
+        button.setOnClickListener(new OnClickListener() {
  
-		button.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);   
+            }
  
-			@Override
-			public void onClick(View arg0) {
+        });
  
-			    Intent intent = new Intent(context, MainActivity.class);
-                            startActivity(intent);   
- 
-			}
- 
-		});
- 
-	}
-	
-	
+    }
+    
+    
 }
