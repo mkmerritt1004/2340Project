@@ -3,19 +3,20 @@ package com.example.m3;
 import java.io.IOException;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+/**
+ * GetCategorySumsTask class.
+ * 
+ * @author Tripp
+ * @version 1.0
+ */
 class GetCategorySumsTask extends AsyncTask<String, Void, HttpResponse> {
 
 	/**
@@ -23,6 +24,7 @@ class GetCategorySumsTask extends AsyncTask<String, Void, HttpResponse> {
 	 */
     private HttpResponse response;
 
+    @Override
     protected HttpResponse doInBackground(String... inputs) {
     	
     	HttpClient httpclient = new DefaultHttpClient();
@@ -35,11 +37,9 @@ class GetCategorySumsTask extends AsyncTask<String, Void, HttpResponse> {
             // Execute HTTP Get Request
             response = httpclient.execute(httpget);
         } catch (ClientProtocolException e) {
-            // TODO Auto-generated catch block
-            System.out.println("CPE"+e);
+            System.out.println("CPE" + e);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            System.out.println("IOE"+e);
+            System.out.println("IOE" + e);
         }
         return response;
     }
