@@ -15,6 +15,12 @@ import org.apache.http.message.BasicNameValuePair;
 
 import android.os.AsyncTask;
 
+/**
+ * LoginTask class.
+ * 
+ * @author Tripp
+ * @version 1.0
+ */
 class LoginTask extends AsyncTask<String, Void, HttpResponse> {
 
 	/**
@@ -22,7 +28,7 @@ class LoginTask extends AsyncTask<String, Void, HttpResponse> {
 	 */
     private HttpResponse response;
 	
-
+    @Override
     protected HttpResponse doInBackground(String... inputs) {
     	HttpClient httpclient = new DefaultHttpClient();
         HttpPost httppost = new HttpPost(inputs[0] + "/users/sign_in.json");
@@ -38,11 +44,9 @@ class LoginTask extends AsyncTask<String, Void, HttpResponse> {
             response = httpclient.execute(httppost);
             
         } catch (ClientProtocolException e) {
-            // TODO Auto-generated catch block
-            System.out.println("CPE"+e);
+            System.out.println("CPE" + e);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            System.out.println("IOE"+e);
+            System.out.println("IOE" + e);
         }
         return response;
     }
