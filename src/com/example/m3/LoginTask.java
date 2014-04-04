@@ -36,8 +36,8 @@ class LoginTask extends AsyncTask<String, Void, HttpResponse> {
         try {
             // Add your data
             List<NameValuePair> params = new ArrayList<NameValuePair>(2);
-            params.add(new BasicNameValuePair("[user][email]", inputs[0]));
-            params.add(new BasicNameValuePair("[user][password]", inputs[1]));
+            params.add(new BasicNameValuePair("[user][email]", inputs[1]));
+            params.add(new BasicNameValuePair("[user][password]", inputs[2]));
             httppost.setEntity(new UrlEncodedFormEntity(params));
 
             // Execute HTTP Post Request

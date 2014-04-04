@@ -19,11 +19,6 @@
             android:name="com.example.m3.MainActivity"
             android:label="@string/app_name"
             android:permission="android.permission.INTERNET" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.example.m3.WelcomeScreenActivity"
@@ -37,11 +32,6 @@
         <activity
             android:name="com.example.m3.SuccessScreenActivity"
             android:label="Success Screen" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.example.m3.RegistrationActivity"
@@ -52,11 +42,6 @@
             android:name="com.example.m3.AccountsOverviewActivity"
             android:label="@string/accounts_overview_title"
             android:permission="android.permission.INTERNET" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.example.m3.AccountCreationActivity"
@@ -65,20 +50,10 @@
         <activity
             android:name="com.example.m3.TransPageActivity"
             android:label="@string/title_activity_trans_page" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.example.m3.DepositActivity"
             android:label="@string/title_activity_deposit" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.example.m3.WithdrawalActivity"
@@ -92,20 +67,10 @@
         <activity
             android:name="com.example.m3.ReportDateSelectActivity"
             android:label="@string/title_activity_report_date_select" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.example.m3.SpendingReportActivity"
             android:label="@string/title_activity_spending_report" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
