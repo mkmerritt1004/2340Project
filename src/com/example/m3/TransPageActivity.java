@@ -74,6 +74,8 @@ public class TransPageActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trans_page);
         Intent oldIntent = getIntent();
+        authTokenString = "auth_token";
+        accountIdString = "account_id";
         authToken = oldIntent.getStringExtra(authTokenString);
         accountId = oldIntent.getStringExtra(accountIdString);
         HttpResponse response;
@@ -83,7 +85,7 @@ public class TransPageActivity extends Activity {
                 String stringResponse = EntityUtils.toString(response.getEntity());
                 JSONObject json = new JSONObject(stringResponse);
                 String balance = json.getString("balance");
-                String name = json.getString("name");
+                String name = json.getString("account_name");
                 addBalanceToScreen(balance);
                 addNameToScreen(name);
             } else {

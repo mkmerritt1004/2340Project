@@ -28,9 +28,14 @@ import android.widget.TextView;
 public class AccountCreationActivity extends Activity {
     
     /**
-    * Buton registerButton.
+    * Button registerButton.
     */
     Button registerButton;
+    
+    /**
+    * Button backButton.
+    */
+    Button backButton;
     
     /**
      * EditText name.
@@ -57,11 +62,17 @@ public class AccountCreationActivity extends Activity {
      */
     String authToken;
     
+    /**
+     * String of the word auth_token
+     */
+    String authTokenString;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent oldIntent = getIntent();
-        authToken = oldIntent.getStringExtra("authToken");
+        authTokenString = "auth_token";
+        authToken = oldIntent.getStringExtra(authTokenString);
         setContentView(R.layout.activity_account_creation);
         addListenerOnCreateButton();
     }
@@ -83,6 +94,7 @@ public class AccountCreationActivity extends Activity {
         textView.setText(newStr);
     }
     
+    
     /**
      * Adds button listener on button.
      */
@@ -91,6 +103,8 @@ public class AccountCreationActivity extends Activity {
         final Context context = this;
 
         registerButton = (Button) findViewById(R.id.depositButton);
+        
+        backButton = (Button) findViewById(R.id.backButton);
 
         registerButton.setOnClickListener(new OnClickListener() {
 
@@ -106,10 +120,10 @@ public class AccountCreationActivity extends Activity {
                 String interestRateDouble = interestRate.getText().toString();
 
                 try {
-                    HttpResponse response = new DatabaseInterface().registerUser(nameStr, accountNameStr, balanceDouble, interestRateDouble);
+                    HttpResponse response = new DatabaseInterface().createAccount(nameStr, accountNameStr, balanceDouble, interestRateDouble, authToken);
                     if ( response.getStatusLine().getStatusCode() == 201 ) {
                         Intent intent = new Intent(context, AccountsOverviewActivity.class);
-                        intent.putExtra("authToken", authToken);
+                        intent.putExtra(authTokenString, authToken);
                         startActivity(intent); 
                     }
                     else {
@@ -129,6 +143,16 @@ public class AccountCreationActivity extends Activity {
 
             }
 
+        });
+        
+        backButton.setOnClickListener(new OnClickListener() {
+            
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent(context, AccountsOverviewActivity.class);
+                intent.putExtra(authTokenString, authToken);
+                startActivity(intent);
+            }
         });
     }
 

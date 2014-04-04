@@ -46,11 +46,17 @@ public class AccountsOverviewActivity extends Activity {
      */
     String authToken;
     
+    /**
+     * String of actual word auth_token
+     */
+    String authTokenString;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent oldIntent = getIntent();
-        authToken = oldIntent.getStringExtra("authToken");
+        authTokenString = "auth_token";
+        authToken = oldIntent.getStringExtra(authTokenString);
         setContentView(R.layout.activity_accounts_overview);
         layout = (LinearLayout) findViewById(R.id.activityAccountsOverview);
         HttpResponse response;
@@ -114,7 +120,7 @@ public class AccountsOverviewActivity extends Activity {
             @Override
             public void onClick(View arg0) {
                 Intent intent = new Intent(context, TransPageActivity.class);
-                intent.putExtra("authToken", authToken);
+                intent.putExtra(authTokenString, authToken);
                 intent.putExtra("account_id", accountId);
                 startActivity(intent);
             }
@@ -144,7 +150,7 @@ public class AccountsOverviewActivity extends Activity {
             @Override
             public void onClick(View arg0) {
                 Intent intent = new Intent(context, AccountCreationActivity.class);
-                intent.putExtra("authToken", authToken);
+                intent.putExtra(authTokenString, authToken);
                 startActivity(intent);  
             }
         });
@@ -154,7 +160,7 @@ public class AccountsOverviewActivity extends Activity {
             @Override
             public void onClick(View arg0) {
                 Intent intent = new Intent(context, ReportDateSelectActivity.class);
-                intent.putExtra("authToken", authToken);
+                intent.putExtra(authTokenString, authToken);
                 startActivity(intent); 
             }
         });

@@ -145,6 +145,7 @@ public class SpendingReportActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spending_report);
+        authTokenString = "auth_token";
         loadElements();
         startDateTextView.setText(startDate);
         endDateTextView.setText(endDate);

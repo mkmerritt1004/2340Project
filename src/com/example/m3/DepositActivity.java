@@ -34,7 +34,7 @@ public class DepositActivity extends Activity {
     /**
      * String accountID.
      */
-    private String accountID;
+    private String accountId;
     
     /**
      * Button depositButton.
@@ -54,15 +54,28 @@ public class DepositActivity extends Activity {
     /**
      * EditText amount.
      */
+    
     private EditText amount;
+    
+    /**
+     * String of the word auth_token
+     */
+    private String authTokenString;
+    
+    /**
+     * String of the word accound_id
+     */
+    private String accountIdString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deposit);
         Intent oldIntent = getIntent();
-        authToken = oldIntent.getStringExtra("authToken");
-        accountID = oldIntent.getStringExtra("accountID");
+        authTokenString = "auth_token";
+        accountIdString = "account_id";
+        authToken = oldIntent.getStringExtra(authTokenString);
+        accountId = oldIntent.getStringExtra(accountIdString);
         addListenerOnCreateButton();
     }
 
@@ -103,11 +116,11 @@ public class DepositActivity extends Activity {
                 String effectiveDateStr = effectiveDate.getText().toString();
                 String amountStr = amount.getText().toString();
                 try {
-                    HttpResponse response = new DatabaseInterface().deposit(sourceStr, effectiveDateStr, amountStr, accountID, authToken);
+                    HttpResponse response = new DatabaseInterface().deposit(sourceStr, effectiveDateStr, amountStr, accountId, authToken);
                     if (response.getStatusLine().getStatusCode() == 201 ) {
                         Intent intent = new Intent(context, TransPageActivity.class);
-                        intent.putExtra("authToken", authToken);
-                        intent.putExtra("accountID", accountID);
+                        intent.putExtra(authTokenString, authToken);
+                        intent.putExtra(accountIdString, accountId);
                         startActivity(intent); 
                     } else {
                         updateTextView(EntityUtils.toString(response.getEntity()));

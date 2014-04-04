@@ -92,6 +92,8 @@ public class WithdrawalActivity extends Activity {
         effectiveDate   = (DatePicker) findViewById(R.id.startDatePicker);
         effectiveDate.setCalendarViewShown(false);
         Intent oldIntent = getIntent();
+        authTokenString = "auth_token";
+        accountIdString = "account_id";
         authToken = oldIntent.getStringExtra(authTokenString);
         accountId = oldIntent.getStringExtra(accountIdString);
         addListenerOnCreateButton();

@@ -112,8 +112,8 @@ public class DatabaseInterface {
      * @throws InterruptedException interrupted exception
      * @throws ExecutionException execution exception 
      */
-    public HttpResponse getAccountInfo(String authToken, String accountID) throws InterruptedException, ExecutionException {
-        return new GetAccountInfoTask().execute(url, accountID, authToken).get();
+    public HttpResponse getAccountInfo(String authToken, String accountId) throws InterruptedException, ExecutionException {
+        return new GetAccountInfoTask().execute(url, accountId, authToken).get();
     }
     
     /**
