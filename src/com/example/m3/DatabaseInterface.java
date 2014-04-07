@@ -20,15 +20,12 @@ public class DatabaseInterface {
     /**
      * Registers user.
      * @return the http response 
-     * @param name name
-     * @param email email
-     * @param password password
-     * @param passwordConfirmation password confirmation
+     * @param inputs name, email, password, passwordConfirmation
      * @throws InterruptedException interruption exception
      * @throws ExecutionException execution exception
      */
-    public HttpResponse registerUser(String name, String email, String password, String passwordConfirmation) throws InterruptedException, ExecutionException {
-        return new RegisterTask().execute(url, name, email, password, passwordConfirmation).get();
+    public HttpResponse registerUser(String... inputs) throws InterruptedException, ExecutionException {
+        return new RegisterTask().execute(url, inputs[0], inputs[1], inputs[2], inputs[3]).get();
     }
 
     /**
@@ -47,17 +44,13 @@ public class DatabaseInterface {
      * Makes a deposit.
      * 
      * @return the http response
-     * @param source source
-     * @param effectiveDate effective date
-     * @param amount amount
-     * @param accountID account identification
-     * @param authToken authentication token
+     * @param inputs source, effectiveDate, amount, accountId, authToken
      * @throws InterruptedException interrupted exception
      * @throws ExecutionException execution exception
      */
     
-    public HttpResponse deposit(String source, String effectiveDate, String amount, String accountID, String authToken) throws InterruptedException, ExecutionException {
-        return new DepositTask().execute(url, source, effectiveDate, amount, accountID, authToken).get();
+    public HttpResponse deposit(String...inputs) throws InterruptedException, ExecutionException {
+        return new DepositTask().execute(url, inputs[0], inputs[1], inputs[2], inputs[3], inputs[4]).get();
     }
     
     /**
@@ -77,16 +70,12 @@ public class DatabaseInterface {
      * Creates an account for a user.
      * 
      * @return the http response
-     * @param name name
-     * @param accountName account name
-     * @param balance balance
-     * @param interestRate interest rate
-     * @param authToken authentication token
+     * @param inputs name, accountName, balance, interestRate, authToken
      * @throws InterruptedException interrupted exception
      * @throws ExecutionException execution exception 
      */
-    public HttpResponse createAccount(String name, String accountName, String balance, String interestRate, String authToken) throws InterruptedException, ExecutionException {
-        return new CreateAccountTask().execute(url, name, accountName, balance, interestRate, authToken).get();
+    public HttpResponse createAccount(String...inputs) throws InterruptedException, ExecutionException {
+        return new CreateAccountTask().execute(url, inputs[0], inputs[1], inputs[2], inputs[3], inputs[4]).get();
     }
     
     /**
@@ -108,7 +97,7 @@ public class DatabaseInterface {
      * 
      * @return the http response
      * @param authToken authentication token
-     * @param accountID account identification
+     * @param accountId account identification
      * @throws InterruptedException interrupted exception
      * @throws ExecutionException execution exception 
      */
@@ -120,11 +109,11 @@ public class DatabaseInterface {
      * Get account info.
      * 
      * @return the http response
-     * @param reason reason
-     * @param category category
-     * @param date 
+     * @param inputs reason, category, date, amount, accountId, authToken
+     * @throws InterruptedException interrupted exception
+     * @throws ExecutionException execution exception 
      */
-    public HttpResponse withdraw(String reason, String category, String date, String amount, String accountID, String authToken) throws InterruptedException, ExecutionException {
-        return new WithdrawTask().execute(url, reason, category, date, amount, accountID, authToken).get();
+    public HttpResponse withdraw(String...inputs) throws InterruptedException, ExecutionException {
+        return new WithdrawTask().execute(url, inputs[0], inputs[1], inputs[2], inputs[3], inputs[4], inputs[5]).get();
     }
 }

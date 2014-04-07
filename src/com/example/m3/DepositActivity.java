@@ -58,12 +58,12 @@ public class DepositActivity extends Activity {
     private EditText amount;
     
     /**
-     * String of the word auth_token
+     * String of the word auth_token.
      */
     private String authTokenString;
     
     /**
-     * String of the word accound_id
+     * String of the word accound_id.
      */
     private String accountIdString;
 
@@ -116,7 +116,8 @@ public class DepositActivity extends Activity {
                 String effectiveDateStr = effectiveDate.getText().toString();
                 String amountStr = amount.getText().toString();
                 try {
-                    HttpResponse response = new DatabaseInterface().deposit(sourceStr, effectiveDateStr, amountStr, accountId, authToken);
+                    String[] inputs = {sourceStr, effectiveDateStr, amountStr, accountId, authToken};
+                    HttpResponse response = new DatabaseInterface().deposit(inputs);
                     if (response.getStatusLine().getStatusCode() == 201 ) {
                         Intent intent = new Intent(context, TransPageActivity.class);
                         intent.putExtra(authTokenString, authToken);

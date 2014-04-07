@@ -143,7 +143,8 @@ public class WithdrawalActivity extends Activity {
                 String amountStr = amount.getText().toString();
 
                 try {
-                    HttpResponse response = new DatabaseInterface().withdraw(reasonStr, categoryStr, date, amountStr, accountId, authToken);
+                    String[] inputs = {reasonStr, categoryStr, date, amountStr, accountId, authToken};
+                    HttpResponse response = new DatabaseInterface().withdraw(inputs[0], inputs[1], inputs[2], inputs[3], inputs[4], inputs[5]);
                     if ( response.getStatusLine().getStatusCode() == 201 ) {
                         Intent intent = new Intent(context, TransPageActivity.class);
                         intent.putExtra(authTokenString, authToken);

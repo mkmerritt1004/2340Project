@@ -47,7 +47,7 @@ public class AccountsOverviewActivity extends Activity {
     String authToken;
     
     /**
-     * String of actual word auth_token
+     * String of actual word auth_token.
      */
     String authTokenString;
     
@@ -63,28 +63,20 @@ public class AccountsOverviewActivity extends Activity {
         try {
             response = new DatabaseInterface().getAccounts(authToken);
             if ( response.getStatusLine().getStatusCode() == 200 ) {
-                try {
-                    String stringResponse = EntityUtils.toString(response.getEntity());
-                    if (stringResponse.length() > 10) {
-                        String arrayStringResponse = stringResponse.substring(1, stringResponse.length() - 1);
-                        String[] accounts = arrayStringResponse.split("\\}");
-                        ArrayList<String> accountNameArray = new ArrayList<String>();
-                        ArrayList<String> accountIdArray = new ArrayList<String>();
-                        for (String account : accounts) {
-                            String[] attr = account.substring(1).split(",");
-                            accountNameArray.add(attr[2]);
-                            accountIdArray.add(attr[0]);
-                        }
-                        for (int i = 0; i < accountNameArray.size(); i++) {
-                            String id = accountIdArray.get(i).split(":")[1];
-                            createButton(accountNameArray.get(i).substring(16, 
-                                    accountNameArray.get(i).length() - 1), id );
-                        }
-                    }
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                String stringResponse = EntityUtils.toString(response.getEntity());
+            	String arrayStringResponse = stringResponse.substring(1, stringResponse.length() - 1);
+                String[] accounts = arrayStringResponse.split("\\}");
+                ArrayList<String> accountNameArray = new ArrayList<String>();
+                ArrayList<String> accountIdArray = new ArrayList<String>();
+                for (String account : accounts) {
+                    String[] attr = account.substring(1).split(",");
+                    accountNameArray.add(attr[2]);
+                    accountIdArray.add(attr[0]);
+                }
+                for (int i = 0; i < accountNameArray.size(); i++) {
+                    String id = accountIdArray.get(i).split(":")[1];
+                    createButton(accountNameArray.get(i).substring(16, 
+           					accountNameArray.get(i).length() - 1), id );
                 }
             }
             else {
@@ -100,6 +92,12 @@ public class AccountsOverviewActivity extends Activity {
             e1.printStackTrace();
         } catch (ExecutionException e1) {
             e1.printStackTrace();
+        } catch (ParseException e) {
+			// TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+			// TODO Auto-generated catch block
+            e.printStackTrace();
         }
         addListenerOnCreateButton();
     }

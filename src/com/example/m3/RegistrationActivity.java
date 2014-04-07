@@ -104,7 +104,8 @@ public class RegistrationActivity extends Activity {
                 String passwordConfirmationStr = passwordConfirmation.getText().toString();
 
                 try {
-                    HttpResponse response = new DatabaseInterface().registerUser(nameStr, emailStr, passwordStr, passwordConfirmationStr);
+                    String[] inputs = {nameStr, emailStr, passwordStr, passwordConfirmationStr};
+                    HttpResponse response = new DatabaseInterface().registerUser(inputs);
                     if ( response.getStatusLine().getStatusCode() == 201 ) {
                         try {
                             String stringResponse = EntityUtils.toString(response.getEntity());

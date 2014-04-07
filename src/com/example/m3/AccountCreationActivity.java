@@ -63,7 +63,7 @@ public class AccountCreationActivity extends Activity {
     String authToken;
     
     /**
-     * String of the word auth_token
+     * String of the word auth_token.
      */
     String authTokenString;
     
@@ -120,7 +120,8 @@ public class AccountCreationActivity extends Activity {
                 String interestRateDouble = interestRate.getText().toString();
 
                 try {
-                    HttpResponse response = new DatabaseInterface().createAccount(nameStr, accountNameStr, balanceDouble, interestRateDouble, authToken);
+                    String[] inputs = {nameStr, accountNameStr, balanceDouble, interestRateDouble, authToken};
+                    HttpResponse response = new DatabaseInterface().createAccount(inputs[0], inputs[1], inputs[2], inputs[3], inputs[4]);
                     if ( response.getStatusLine().getStatusCode() == 201 ) {
                         Intent intent = new Intent(context, AccountsOverviewActivity.class);
                         intent.putExtra(authTokenString, authToken);
