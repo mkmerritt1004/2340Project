@@ -72,6 +72,10 @@
             android:name="com.example.m3.SpendingReportActivity"
             android:label="@string/title_activity_spending_report" >
         </activity>
+        <activity
+            android:name="com.example.m3.SplashActivity"
+            android:label="@string/title_activity_splash" >
+        </activity>
     </application>
 
 </manifest>
